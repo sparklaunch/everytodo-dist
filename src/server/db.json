@@ -1,0 +1,25 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "content": "json-server를 배워봅시다.",
+      "comment": [
+        {
+          "commentId": 1,
+          "comment": "나도 반가워요",
+          "username": "mark",
+          "createdAt": "",
+          "editCheck": false
+        },
+        {
+          "commentId": 2,
+          "comment": "하이",
+          "username": "tommy",
+          "createdAt": "LocalDateTime",
+          "editCheck": false
+        }
+      ]
+    }
+  ]
+}
