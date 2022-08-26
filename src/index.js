@@ -4,12 +4,16 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import GlobalStyle from "./shared/GlobalStyle";
+import { Provider } from "react-redux";
+import store from "./redux/config/configStore";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <div>
         <GlobalStyle />
-        <App />
+        <Provider store={store}>
+            <App />
+        </Provider>
     </div>
 );
 
