@@ -6,18 +6,18 @@ import Signup from "../components/signup/Signup";
 import AddPost from "../components/addPost/AddPost";
 
 const Router = () => {
-    return (
-        <BrowserRouter>
-            <Routes>
-                {/* 각자 작업한 router 설정 */}
-                <Route path="/" element={<Home />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/addpost" element={<AddPost />} />
-                <Route path="detail/" element={<Detail />} />
-                <Route path="detail/:id" element={<Detail />} />
-            </Routes>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* 각자 작업한 router 설정 */}
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/addpost" element={<AddPost />} />
+        <Route path="/detail" element={<Detail />} />
+        <Route path="/detail/:id" element={<Detail />} />
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 export default Router;
