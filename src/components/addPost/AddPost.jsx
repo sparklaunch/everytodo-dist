@@ -9,8 +9,7 @@ import {
 
 import {useNavigate} from 'react-router-dom';
 
-import Home from '../home/Home';
-
+import HeaderStyle from "../../components/header/Header";
 
 function AddPost(){
 
@@ -37,8 +36,7 @@ function AddPost(){
 
     return(
         <>
-            <Home />
-            
+            <HeaderStyle />
             <div className='add-post-box'>    
                 <form className="add-post-form">
                     <div className='post-inputs'>
@@ -55,7 +53,7 @@ function AddPost(){
                         <Button variant="contained" onClick={() => navigate(-1)}>돌아가기</Button>
                         <Button variant="contained" disabled={disabled} onClick={AddPostBtn}>저장하기!!</Button>
                     </div>
-                    
+                
                 </form>
             </div>
         </>
