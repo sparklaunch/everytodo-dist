@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -16,11 +16,35 @@ function CommentComponent() {
   // navigate
   const navigate = useNavigate();
 
+  /* 댓글 등록 초기값 설정 */
+  const [inputs, setInputs] = useState({
+    comment: "",
+  });
+
+  const { comment } = inputs;
+
+  /* 댓글 input onCahge 설정 */
+  const onChange = (e) => {
+    // e.target 에서 name(key)와 value 추출하기
+    const { name, value } = e.target;
+
+    // setInputs을 안해주면 input창에 변화가 없음
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
+
   return (
     <>
       {/* 댓글 작성 컴포넌트 */}
       <ContainerStyle direction="row">
-        <StyleInputComment />
+        <StyleInputComment
+          placeholder="댓글을 입력하세요"
+          name="comment"
+          value={comment}
+          onChange={onChange}
+        />
         <StyleAddComment>등록</StyleAddComment>
       </ContainerStyle>
 
