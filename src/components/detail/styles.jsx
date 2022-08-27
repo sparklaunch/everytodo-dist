@@ -3,9 +3,10 @@ import styled from "styled-components";
 
 const StyleTopContainer = styled.div`
   position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  left: 150px;
+  top: 150px;
+  transform: translate(-30px, -30px);
+  margin: auto;
 `;
 
 const StyleCommentItem = styled.div`
