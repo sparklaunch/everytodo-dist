@@ -13,11 +13,32 @@
       "id": 2
     },
     {
-      "user_id": "user-id",
+      "user_id": "user_id",
       "title": "오늘은 뭘 해볼까용",
       "comment": "냠",
       "id": 3
+    },
+    {
+      "user_id": "user_id",
+      "title": "테스트테스트테",
+      "comment": "스트",
+      
+      "id": 4
+    }
+  ],
+
+  "subComment":[
+    {
+      "user_id": "hnan",
+      "title": "오늘도",
+      "comment": "오늘도 오류 없는 하루가 되게해주세요",
+      "sub_id": 1,
+      "id": 1
     }
   ]
+    
 }
 
+
+  
+ 

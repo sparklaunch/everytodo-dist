@@ -32,7 +32,7 @@ function AddPost(){
 
 
     let data = {
-        "user-id": "user-id",
+        "user_id": "user_id",
         "title": title,
         "comment": comment,
     }
