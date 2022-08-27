@@ -25,7 +25,7 @@ function AddPost(){
         settitle(document.getElementById('post-title').value)
         setcomment(document.getElementById('post-comment').value)
         
-        title.length < 9 || comment.length < 1 ? setdisabled(true) : setdisabled(false)
+        title.length < 4 || comment.length < 1 ? setdisabled(true) : setdisabled(false)
         // comment.length < 1 ? setdisabled(true) : setdisabled(false)
         console.log(title.length)
     }
@@ -59,7 +59,7 @@ function AddPost(){
                     <div className='post-inputs'>
                         <div>
                             <label>제목</label>      
-                            <TextField fullWidth label="10자 이상 작성해주세요!" id="post-title" onChange={inputValueChange}/>          
+                            <TextField fullWidth label="5자 이상 작성해주세요!" id="post-title" onChange={inputValueChange}/>          
                         </div>
                         <div>
                             <label>내용</label>                
