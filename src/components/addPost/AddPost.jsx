@@ -1,17 +1,21 @@
 import React from 'react'
 import './AddPost.css'
 import { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 // import {useDispatch, useSelector} from 'react-redux'
 import {
     Button,
     TextField
 } from "@mui/material";
 
-import {useNavigate} from 'react-router-dom';
-
 import HeaderStyle from "../../components/header/Header";
 
+import axios from 'axios';
+
+
 function AddPost(){
+
+    const navigate = useNavigate();
 
     const [title, settitle] = useState('');
     const [comment, setcomment] = useState('');
@@ -27,12 +31,25 @@ function AddPost(){
     }
 
 
+    let data = {
+        "user-id": "user-id",
+        "title": title,
+        "comment": comment,
+    }
+    // let todoList = useSelector((state=>state )) 
+    // const dispatch = useDispatch()
     const AddPostBtn = (e) => {
         e.preventDefault()
         console.log('포스트 추가')
+        axios.post("http://localhost:5001/todos",data).then(response=>{
+            console.log(response)
+        })
+
+        // dispatch(createTodo())
+        navigate(-1)
     }
 
-    const navigate = useNavigate();
+    
 
     return(
         <>

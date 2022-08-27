@@ -1,0 +1,14 @@
+.iconBtn{
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    border-radius: 15px;
+}
+.iconBtn:hover{
+    background-color: rgb(209, 209, 209);
+}
+.iconBtn img:hover{
+    cursor: pointer;
+    
+}
