@@ -92,6 +92,7 @@ function CommentComponent() {
   if (error) {
     return <div>{error.message}</div>;
   }
+
   return (
     <>
       {/* 댓글 작성 컴포넌트 */}
