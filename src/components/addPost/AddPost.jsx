@@ -45,7 +45,7 @@ function AddPost(){
             console.log(response)
         })
 
-        // dispatch(createTodo())
+        // dispatch(createTodo()) 리덕스 concat 자리
         navigate(-1)
     }
 

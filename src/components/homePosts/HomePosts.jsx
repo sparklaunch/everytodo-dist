@@ -14,11 +14,11 @@ function HomePosts(props) {
   const [login, setLogin] = useState(false);
   const navigate = useNavigate()
 
-  
+  console.log(props)
 
   if(login === true){
     return(
-        <div key={props.key} className="postList">
+        <div className="postList">
             <div onClick={() => navigate("/detail:id")} className="commentBox">
                 <h3 className="title">{props.title}</h3>
                 <p className="comment">{props.comment}</p>
@@ -27,7 +27,7 @@ function HomePosts(props) {
     );
   } else {
     return(
-        <div key={props.key} className="postList">
+        <div className="postList">
             <div onClick={() => navigate("/detail:id")} className="commentBox">
                 <h3 className="title">{props.title}</h3>
                 <p className="comment">{props.comment}</p>

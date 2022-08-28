@@ -38,7 +38,7 @@ function Home() {
         </div>
         <div className="listBody">
           {todoList.map((v,index)=>(
-              <HomePosts key={todoList[index].id} title={todoList[index].title} comment={todoList[index].comment} />    
+              <HomePosts key={todoList[index].id} id={todoList[index].id} title={todoList[index].title} comment={todoList[index].comment} />    
             ))}
         </div>
     </>

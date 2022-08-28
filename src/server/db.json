@@ -17,17 +17,9 @@
       "title": "오늘은 뭘 해볼까용",
       "comment": "냠",
       "id": 3
-    },
-    {
-      "user_id": "user_id",
-      "title": "테스트테스트테",
-      "comment": "스트",
-      
-      "id": 4
     }
   ],
-
-  "subComment":[
+  "subComment": [
     {
       "user_id": "hnan",
       "title": "오늘도",
@@ -36,9 +28,4 @@
       "id": 1
     }
   ]
-    
 }
-
-
-  
- 
