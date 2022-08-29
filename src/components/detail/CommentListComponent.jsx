@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CreateIcon from "@mui/icons-material/Create";
-import { StyleCommentItem, CommentContainerStyle, TextStyle } from "./styles";
+import Button from "@mui/material/Button";
+import {
+  StyleCommentItem,
+  CommentContainerStyle,
+  TextStyle,
+  StyleUpdateComment,
+} from "./styles";
 
+/* [댓글] 리스트 조회 및 수정, 삭제 컴포넌트 */
 function CommentListComponent({
   todo_id,
   commentList,
@@ -40,8 +47,9 @@ function CommentItemComponent({
   onChangeEditStatus,
   onUpdateComment,
 }) {
+  /* 댓글 입력 inputs 상태 */
   const [inputs, setInputs] = useState({
-    todoId: todo_id, // Id를 1로 설정했다가 2로 변경하고 setInputs도 2로 값을 변경하면 데이터 삭제시 todoid가 2인것이 전부 삭제됨...
+    todoId: todo_id,
     userId: "",
     comment: "",
     userName: "",
@@ -58,6 +66,7 @@ function CommentItemComponent({
   };
   return (
     <>
+      {/* editCheck 상태이면 수정, 삭제 버튼 */}
       {!editCheck ? (
         <StyleCommentItem>
           <CommentContainerStyle direction="row" transePose="space-between">
@@ -95,7 +104,7 @@ function CommentItemComponent({
               {/* <TextStyle margin="7px 0px 5px 5px" fontSize="16px">
                 {comment}
               </TextStyle> */}
-              <input
+              <StyleUpdateComment
                 name="comment"
                 defaultValue={comment}
                 onChange={onChange}
@@ -104,9 +113,16 @@ function CommentItemComponent({
                 {userName}
               </TextStyle>
             </CommentContainerStyle>
-            <CommentContainerStyle direction="row" margin="10px 10px 0px 5px">
-              <button onClick={() => onChangeEditStatus(id)}>취소</button>
-              <button onClick={() => onUpdateComment(id, inputs)}>완료</button>
+            <CommentContainerStyle direction="row" margin="10px 0px 0px 0px">
+              <Button variant="text" onClick={() => onChangeEditStatus(id)}>
+                취소
+              </Button>
+              <Button
+                variant="text"
+                onClick={() => onUpdateComment(id, inputs)}
+              >
+                완료
+              </Button>
             </CommentContainerStyle>
           </CommentContainerStyle>
         </StyleCommentItem>

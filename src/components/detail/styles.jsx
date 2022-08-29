@@ -61,6 +61,14 @@ const StyleInputComment = styled.input`
   border-color: #e0e0e0;
   margin: 10px 0px 0px 25px;
 `;
+const StyleUpdateComment = styled.input`
+  width: 350px;
+  height: 40px;
+  border-style: solid;
+  border-color: white;
+  margin: 7px 0px 0px 5px;
+  color: #616161;
+`;
 
 const StylePreviousButton = styled.button`
   background-color: #82b1ff;
@@ -172,6 +180,7 @@ export {
   StyleCommentDetailStyle,
   StyleAddComment,
   StyleInputComment,
+  StyleUpdateComment,
   StylePreviousButton,
   StylePublicButton,
   StyleTitle,
