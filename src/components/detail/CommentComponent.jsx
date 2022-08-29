@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   _getComments,
@@ -14,20 +14,24 @@ import {
   ContainerStyle,
   TextStyle,
 } from "./styles";
-import axios from "axios";
 import CommentListComponent from "./CommentListComponent";
 
 function CommentComponent() {
   // navigate
   const navigate = useNavigate();
+
   // dispatch
   const dispatch = useDispatch();
+
+  // useParams
+  const param = useParams();
+  const todo_id = Number(param.id);
+
   // store에서 데이터 가져오기
   const { isLoading, error, comments } = useSelector((state) => state.comments);
 
-  let nextId = 2;
   const [inputs, setInputs] = useState({
-    todoId: 1, // Id를 1로 설정했다가 2로 변경하고 setInputs도 2로 값을 변경하면 데이터 삭제시 todoid가 2인것이 전부 삭제됨...
+    todoId: todo_id, // Id를 1로 설정했다가 2로 변경하고 setInputs도 2로 값을 변경하면 데이터 삭제시 todoid가 2인것이 전부 삭제됨...
     userId: "",
     comment: "",
     userName: "",
@@ -56,7 +60,7 @@ function CommentComponent() {
 
     // 초기화
     setInputs({
-      todoId: 1,
+      todoId: todo_id,
       userId: "",
       comment: "",
       userName: "",
