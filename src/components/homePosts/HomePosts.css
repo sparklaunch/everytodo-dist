@@ -1,4 +1,11 @@
 /* Home과 같이 사용 */
+a:link { 
+    text-decoration: none;
+   }    
+a:visited { 
+    color: black;
+    }
+
 /* Home */
 .listTop {
     display: flex;

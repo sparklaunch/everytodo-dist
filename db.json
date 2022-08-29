@@ -47,40 +47,13 @@
       "id": 4
     },
     {
-      "todoId": 3,
-      "userId": "",
-      "comment": "ddddd",
-      "userName": "",
-      "createdAt": 2022,
-      "editCheck": false,
-      "id": 5
-    },
-    {
       "todoId": 2,
       "userId": "",
-      "comment": "zzzzggg",
+      "comment": "zzzzgggㅋㅋㅋ",
       "userName": "",
       "createdAt": 2022,
       "editCheck": false,
       "id": 7
-    },
-    {
-      "todoId": 1,
-      "userId": "",
-      "comment": "안녕하세요ㅎㅎ",
-      "userName": "",
-      "createdAt": 2022,
-      "editCheck": false,
-      "id": 8
-    },
-    {
-      "todoId": 1,
-      "userId": "",
-      "comment": "hi",
-      "userName": "",
-      "createdAt": 2022,
-      "editCheck": false,
-      "id": 9
     }
   ]
 }

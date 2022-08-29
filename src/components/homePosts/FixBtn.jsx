@@ -3,13 +3,16 @@ import './FixBtn.css'
 import React from "react";
 import {useNavigate} from 'react-router-dom';
 
+import axios from 'axios';
 
 function FixButton(props) {
     const navigate = useNavigate()
 
     const deleteCheck = () =>{
         if(window.confirm('삭제할래요?')){
-            alert('삭제!');
+            axios.delete(`http://localhost:5001/todos/${props.id}`)
+            .then(() => alert('삭제완료!'));
+            
         } else {
             alert('휴');
         }
@@ -27,7 +30,7 @@ function FixButton(props) {
     if(props.type === 'fix'){
         return(
             <button className="iconBtn"
-                    onClick={()=>navigate('/edit')}
+                    onClick={() => navigate(`/edit/${props.id}`)}
             >
                 <img  
                 src={require('../../image/pencil.png')}

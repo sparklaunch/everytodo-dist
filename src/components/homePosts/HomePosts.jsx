@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./HomePosts.css";
 import FixButton from "./FixBtn";
 
-// import axios from "axios"
 import { useState } from "react";
 
 function HomePosts(props) {

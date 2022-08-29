@@ -1,9 +1,11 @@
 import React from "react";
+import { useEffect } from "react";
+
+import { useNavigate } from "react-router-dom";
+
 import Header from "../header/Header";
 import HomePosts from "../homePosts/HomePosts";
 import axios from "axios";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { __getAllTodos } from "../../redux/modules/todos";
 import { useDispatch, useSelector } from "react-redux";
