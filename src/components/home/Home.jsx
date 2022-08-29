@@ -24,10 +24,10 @@ function Home() {
     let data = axios.get("http://localhost:5001/todos").then(response=>
     response['data'])
       data.then((result)=>{
-        console.log(result)
+        
         setTodoList(result)
       })
-  }, [todoList]);
+  }, []);
 
   console.log(todoList)
 
