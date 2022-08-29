@@ -4,6 +4,7 @@ import Detail from "../components/detail/Detail";
 import Home from "../components/home/Home";
 import Signup from "../components/signup/Signup";
 import AddPost from "../components/addPost/AddPost";
+import EditPost from "../components/edit/Edit";
 
 const Router = () => {
   return (
@@ -15,6 +16,8 @@ const Router = () => {
         <Route path="/addpost" element={<AddPost />} />
         <Route path="/detail" element={<Detail />} />
         <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/edit" element={<EditPost />} />
+        <Route path="/edit/:id" element={<EditPost />} />
       </Routes>
     </BrowserRouter>
   );
