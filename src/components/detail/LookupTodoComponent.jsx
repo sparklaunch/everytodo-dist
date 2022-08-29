@@ -3,7 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CreateIcon from "@mui/icons-material/Create";
-import { __getTodos, __deleteTodo } from "../../redux/modules/todos";
+import {
+  __getAllTodos,
+  __getTodos,
+  __deleteTodo,
+} from "../../redux/modules/todos";
 import {
   StyleContent,
   StylePreviousButton,
@@ -15,37 +19,40 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 function LookupTodo() {
-  // navigate
+  /* navigate */
   const navigate = useNavigate();
 
-  // useParams
+  /* useParams */
   const param = useParams();
   const todo_id = Number(param.id);
-  console.log("params확인", todo_id);
 
-  // dispatch
+  /* dispatch */
   const dispatch = useDispatch();
 
-  // useSelector -  특정 todos만 가져옴
+  /* useSelector */
+  // db에서 가져온(Get) 데이터들을 store에 상태를 저장하고 저장된 상태를 가져옴
   const { todos } = useSelector((state) => state.todos);
-  console.log("data들", todos);
 
-  // [DELETE] 특정 id의 todo 삭제
+  /* [DELETE] 특정 todo를 삭제  */
   const onDeleteTodo = (id) => {
-    console.log("id확인", id);
     if (id) {
-      alert("정말 삭제하실건가요?");
-      dispatch(__deleteTodo(todo_id));
-      alert("삭제가 완료되었습니다");
-      navigate(`/`);
+      if (window.confirm("정말 삭제하시겠습니까?")) {
+        dispatch(__deleteTodo(todo_id));
+        alert("삭제되었습니다.");
+        navigate(`/`);
+      } else {
+        alert("취소합니다.");
+      }
     }
   };
 
-  // useEffect;
+  /* useEffect */
+  // 의존성 배열에 dispatch를 담고, 값의 변화가 있을 때마다 리렌더링 시킴
   useEffect(() => {
-    dispatch(__getTodos(todo_id));
+    dispatch(__getAllTodos());
   }, [dispatch]);
 
+  /* 특정 TODO만 Detail 페이지에서 보여주기 */
   return (
     <>
       {todos
@@ -53,7 +60,7 @@ function LookupTodo() {
         .map((item) => (
           <LoopupTdoDetailComponent
             key={todo_id}
-            todo_id={item.todo_id}
+            todo_id={todo_id}
             todos={item}
             onDeleteTodo={onDeleteTodo}
           />
@@ -61,7 +68,7 @@ function LookupTodo() {
     </>
   );
 }
-
+/* 특정 TODO만 보여주는 컴포넌트 */
 function LoopupTdoDetailComponent({ todo_id, todos, onDeleteTodo }) {
   // navigate
   const navigate = useNavigate();
@@ -76,7 +83,11 @@ function LoopupTdoDetailComponent({ todo_id, todos, onDeleteTodo }) {
           이전으로
         </StylePreviousButton>
         <StyleButtonContainer>
-          <IconButton aria-label="delete" size="small">
+          <IconButton
+            aria-label="delete"
+            size="small"
+            onClick={() => navigate(`/edit/${todo_id}`)}
+          >
             <CreateIcon />
           </IconButton>{" "}
           <IconButton

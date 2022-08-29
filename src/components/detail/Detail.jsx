@@ -13,7 +13,7 @@ function Detail() {
       <StyleTopContainer>
         {/* todo 디테일 조회 */}
         <LookupTodo />
-        {/* todo 댓글 등록 */}
+        {/* todo 댓글 등록 및 조회 */}
         <CommentComponent></CommentComponent>
       </StyleTopContainer>
     </>

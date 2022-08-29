@@ -16,30 +16,40 @@ import {
 } from "./styles";
 import CommentListComponent from "./CommentListComponent";
 
+/* [댓글] 등록 및 조회 컴포넌트 */
 function CommentComponent() {
-  // navigate
+  /* navigate */
   const navigate = useNavigate();
 
-  // dispatch
+  /* dispatch */
   const dispatch = useDispatch();
 
-  // useParams
+  /* useParams */
   const param = useParams();
   const todo_id = Number(param.id);
 
-  // store에서 데이터 가져오기
+  /* Redux Store에서 Comments 데이터 가져오기 */
+  // db에서 가져온 Comments들을 store에 저장하고, 해당 데이터를 useSelector로 가져옴
   const { isLoading, error, comments } = useSelector((state) => state.comments);
 
+  /* DateTime 설정 */
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = ("0" + (today.getMonth() + 1)).slice(-2);
+  let day = ("0" + today.getDate()).slice(-2);
+  let createDate = year + month + day;
+
+  /* input 입력 상태 관리 */
   const [inputs, setInputs] = useState({
-    todoId: todo_id, // Id를 1로 설정했다가 2로 변경하고 setInputs도 2로 값을 변경하면 데이터 삭제시 todoid가 2인것이 전부 삭제됨...
+    todoId: todo_id,
     userId: "",
     comment: "",
     userName: "",
-    createdAt: 2022,
+    createdAt: createDate,
     editCheck: false,
   });
-
-  const { comment, userName, editCheck } = inputs;
+  // 구조분해 할당으로 inputs에서 comment값 가져오기
+  const { comment } = inputs;
 
   /* 댓글 입력하기 */
   const onChange = (e) => {
@@ -58,13 +68,14 @@ function CommentComponent() {
       dispatch(__addComments(inputs));
     }
 
-    // 초기화
+    // Input 초기화
+    // 초기화 형태를 아래처럼 지정해줘야 db에 해당 Key, value가 저장됨
     setInputs({
       todoId: todo_id,
       userId: "",
       comment: "",
       userName: "",
-      createdAt: 2022,
+      createdAt: createDate,
       editCheck: false,
     });
   };
@@ -75,20 +86,30 @@ function CommentComponent() {
   };
 
   /* [EDIT_CHECK] 댓글 상태 변경하기 */
+  // 댓글 상태 변경은 db에는 변하지 않고, 프론트단에서만 변경상태 확인
   const onChangeEditStatus = (id) => {
     dispatch(checkEdit(id));
   };
 
-  /* [UDPATE] 댓글 상태 변경하기 */
+  /* [UDPATE] 댓글 업데이트하기 */
   const onUpdateComment = (id, updateComment) => {
-    dispatch(__updateComments({ id, updateComment }));
-    dispatch(checkEdit(id));
+    // 댓글 등록 후, 등록한 댓글을 수정 버튼 누르고 바로 완료버튼 누를경우 데이터가 유실됨
+    if (updateComment.comment === "") {
+      alert("댓글을 다시 입력하세요!");
+    } else {
+      dispatch(__updateComments({ id, updateComment }));
+      // 업데이트가 되면 editCheck를 true로 변경시켜줌
+      dispatch(checkEdit(id));
+    }
   };
 
+  /* useEffect */
   useEffect(() => {
-    dispatch(_getComments(todo_id)); // 특정 todo에 해당하는 comment만 가져와야 함
-  }, [dispatch]); //comment값이 등록되면 화면에 즉시 반영해줘야 함 -> comments로 넣으면 서버가 계속 돌아감... 따라서 Inputs값으로 넣어줬는데 맞는지 모르겠음 -> inputs값을 넣으면 안되고, redux 모듈에서 Post 설정해서 바뀐 값을 가져와야 한다.
+    // 특정 todo에 해당하는 comment만 가져와야 함
+    dispatch(_getComments(todo_id));
+  }, [dispatch]); // 값에 변경사항이 있을 때마다 리렌더링
 
+  /* loading or error 상태일 때 보여줄 화면*/
   if (isLoading) {
     return <div>로딩 중....</div>;
   }
