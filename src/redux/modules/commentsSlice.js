@@ -10,12 +10,14 @@ const initialState = {
 };
 
 /* Thunk function */
-// [GET]
+// [GET - 특정 id에 해당하는 comment만 가져옴]
 export const _getComments = createAsyncThunk(
   "getComments",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:5001/comments");
+      const data = await axios.get(
+        `http://localhost:5001/comments?todoId=${payload}`
+      );
       return thunkAPI.fulfillWithValue(data.data); // 네트워크 요청이 성공하면 dispatch해주는 기능
     } catch (error) {
       return thunkAPI.rejectWithValue(error); //네트워크 요청이 실패한 경우 dispatch 해주는 기능

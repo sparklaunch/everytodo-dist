@@ -5,6 +5,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import { StyleCommentItem, CommentContainerStyle, TextStyle } from "./styles";
 
 function CommentListComponent({
+  todo_id,
   commentList,
   onDeleteComment,
   onChangeEditStatus,
@@ -16,6 +17,7 @@ function CommentListComponent({
         <CommentItemComponent
           key={item.id}
           id={item.id}
+          todo_id={todo_id}
           comment={item.comment}
           editCheck={item.editCheck}
           userName={item.userName}
@@ -30,6 +32,7 @@ function CommentListComponent({
 
 function CommentItemComponent({
   id,
+  todo_id,
   comment,
   editCheck,
   userName,
@@ -38,7 +41,7 @@ function CommentItemComponent({
   onUpdateComment,
 }) {
   const [inputs, setInputs] = useState({
-    todoId: 1, // Id를 1로 설정했다가 2로 변경하고 setInputs도 2로 값을 변경하면 데이터 삭제시 todoid가 2인것이 전부 삭제됨...
+    todoId: todo_id, // Id를 1로 설정했다가 2로 변경하고 setInputs도 2로 값을 변경하면 데이터 삭제시 todoid가 2인것이 전부 삭제됨...
     userId: "",
     comment: "",
     userName: "",
