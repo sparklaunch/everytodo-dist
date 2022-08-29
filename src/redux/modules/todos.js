@@ -10,6 +10,18 @@ const initialState = {
 };
 
 /* Thunk function */
+// [GET - 데이터 전체 조회]
+export const __getAllTodos = createAsyncThunk(
+  "GET_ALL_TODOS",
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.get("http://localhost:5001/todos/");
+      return thunkAPI.fulfillWithValue(data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 // [GET - 특정ID를 가진 TODO 데이터만 조회]
 export const __getTodos = createAsyncThunk(
   "GET_TODOS",
@@ -66,10 +78,18 @@ export const todosSlice = createSlice({
   //extraReducers
   extraReducers: {
     /* Pending */
+    [__getAllTodos.pending]: (state, action) => {
+      state.isLoading = true;
+    },
     [__getTodos.pending]: (state, action) => {
       state.isLoading = true;
     },
     /* Fulfilled */
+    [__getAllTodos.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.todos = action.payload;
+      console.log("[todos 전체 데이터 조회]", state.todos);
+    },
     [__getTodos.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.todos = [action.payload];
@@ -88,6 +108,10 @@ export const todosSlice = createSlice({
       );
     },
     /* Rejected */
+    [__getAllTodos.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     [__getTodos.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;

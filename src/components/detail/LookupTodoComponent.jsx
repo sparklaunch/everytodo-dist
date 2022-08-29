@@ -21,6 +21,7 @@ function LookupTodo() {
   // useParams
   const param = useParams();
   const todo_id = Number(param.id);
+  console.log("params확인", todo_id);
 
   // dispatch
   const dispatch = useDispatch();
@@ -40,21 +41,23 @@ function LookupTodo() {
     }
   };
 
-  // useEffect
+  // useEffect;
   useEffect(() => {
     dispatch(__getTodos(todo_id));
   }, [dispatch]);
 
   return (
     <>
-      {todos.map((item) => (
-        <LoopupTdoDetailComponent
-          key={todo_id}
-          todo_id={item.todo_id}
-          todos={item}
-          onDeleteTodo={onDeleteTodo}
-        />
-      ))}
+      {todos
+        .filter((item) => item.id === todo_id)
+        .map((item) => (
+          <LoopupTdoDetailComponent
+            key={todo_id}
+            todo_id={item.todo_id}
+            todos={item}
+            onDeleteTodo={onDeleteTodo}
+          />
+        ))}
     </>
   );
 }

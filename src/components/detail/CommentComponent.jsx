@@ -86,7 +86,7 @@ function CommentComponent() {
   };
 
   useEffect(() => {
-    dispatch(_getComments());
+    dispatch(_getComments(todo_id)); // 특정 todo에 해당하는 comment만 가져와야 함
   }, [dispatch]); //comment값이 등록되면 화면에 즉시 반영해줘야 함 -> comments로 넣으면 서버가 계속 돌아감... 따라서 Inputs값으로 넣어줬는데 맞는지 모르겠음 -> inputs값을 넣으면 안되고, redux 모듈에서 Post 설정해서 바뀐 값을 가져와야 한다.
 
   if (isLoading) {
@@ -119,6 +119,7 @@ function CommentComponent() {
         </TextStyle>
         {comments && (
           <CommentListComponent
+            todo_id={todo_id}
             commentList={comments}
             onDeleteComment={onDeleteComment}
             onChangeEditStatus={onChangeEditStatus}
