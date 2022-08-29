@@ -47,13 +47,20 @@ function CommentItemComponent({
   onChangeEditStatus,
   onUpdateComment,
 }) {
+  /* DateTime 설정 */
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = ("0" + (today.getMonth() + 1)).slice(-2);
+  let day = ("0" + today.getDate()).slice(-2);
+  let createDate = year + month + day;
+
   /* 댓글 입력 inputs 상태 */
   const [inputs, setInputs] = useState({
     todoId: todo_id,
     userId: "",
     comment: "",
     userName: "",
-    createdAt: 2022,
+    createdAt: createDate,
     editCheck: false,
   });
   /* 댓글 입력하기 */

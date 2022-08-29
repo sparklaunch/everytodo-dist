@@ -75,7 +75,7 @@ function CommentComponent() {
       userId: "",
       comment: "",
       userName: "",
-      createdAt: 2022,
+      createdAt: createDate,
       editCheck: false,
     });
   };
