@@ -38,6 +38,23 @@ export const __deleteTodo = createAsyncThunk(
   }
 );
 
+// [UPDATE]
+export const __updateTodo = createAsyncThunk(
+  "UPDATAE_TODOS",
+  async (payload, thunkAPI) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:5001/todos/${payload.id}`,
+        payload
+      );
+      console.log("response", response);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 /* createSlice */
 export const todosSlice = createSlice({
   // 모듈 이름
@@ -61,6 +78,14 @@ export const todosSlice = createSlice({
     [__deleteTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.todos = state.todos.filter((item) => item.id !== action.payload);
+    },
+    [__updateTodo.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.todos = state.todos.map((item) =>
+        item.id === action.id
+          ? { ...item, title: action.title, content: action.content }
+          : item
+      );
     },
     /* Rejected */
     [__getTodos.rejected]: (state, action) => {
