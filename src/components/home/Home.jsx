@@ -1,9 +1,12 @@
 import React from "react";
+import { useState , useEffect} from "react";
+
+import {useNavigate} from 'react-router-dom';
+
 import Header from "../header/Header";
 import HomePosts from "../homePosts/HomePosts";
+
 import axios from "axios"
-import { useState , useEffect} from "react";
-import {useNavigate} from 'react-router-dom';
 import {
   Button,
 
@@ -12,21 +15,22 @@ import {
 
 function Home() {
   const navigate = useNavigate();
+
   
-  const [todoList, setTodoList] = useState([])
+  const [todoList, setTodoList] = useState([]);
 
   
   useEffect(() => {
     let data = axios.get("http://localhost:5001/todos").then(response=>
     response['data'])
-      console.log(data.then((result)=>{
+      data.then((result)=>{
         console.log(result)
         setTodoList(result)
-      }))
-  }, []);
-
+      })
+  }, [todoList]);
 
   console.log(todoList)
+
   
 
   return (
@@ -37,8 +41,8 @@ function Home() {
           <Button variant="contained" onClick={() => navigate("/addPost")}>글쓰기</Button>
         </div>
         <div className="listBody">
-          {todoList.map((v,index)=>(
-              <HomePosts key={todoList[index].id} id={todoList[index].id} title={todoList[index].title} comment={todoList[index].comment} />    
+          {todoList.map((item)=>(
+              <HomePosts key={item.id} id={item.id} title={item.title} comment={item.comment} />    
             ))}
         </div>
     </>

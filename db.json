@@ -5,18 +5,6 @@
       "title": "오늘도",
       "comment": "오늘도 오류 없는 하루가 되게해주세요",
       "id": 1
-    },
-    {
-      "user_id": "vana",
-      "title": "오늘도",
-      "comment": "오늘도 오류 없는 하루가 되게해주세요",
-      "id": 2
-    },
-    {
-      "user_id": "user_id",
-      "title": "테스트테스트",
-      "comment": "테",
-      "id": 3
     }
   ],
   "subComment": [

@@ -1,8 +1,7 @@
-import React from 'react'
 import './AddPost.css'
+import React from 'react'
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
-// import {useDispatch, useSelector} from 'react-redux'
 import {
     Button,
     TextField
@@ -12,9 +11,9 @@ import HeaderStyle from "../../components/header/Header";
 
 import axios from 'axios';
 
-
 function AddPost(){
 
+    
     const navigate = useNavigate();
 
     const [title, settitle] = useState('');
@@ -26,8 +25,6 @@ function AddPost(){
         setcomment(document.getElementById('post-comment').value)
         
         title.length < 4 || comment.length < 1 ? setdisabled(true) : setdisabled(false)
-        // comment.length < 1 ? setdisabled(true) : setdisabled(false)
-        console.log(title.length)
     }
 
 
@@ -45,11 +42,9 @@ function AddPost(){
             console.log(response)
         })
 
-        // dispatch(createTodo()) 리덕스 concat 자리
         navigate(-1)
     }
 
-    
 
     return(
         <>
