@@ -21,6 +21,7 @@ function CommentListComponent({
   onChangeEditStatus,
   onUpdateComment,
 }) {
+  console.log("화긴~", commentList);
   return (
     <>
       {commentList.map((item) => (
