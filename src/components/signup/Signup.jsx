@@ -130,7 +130,7 @@ const Signup = () => {
         });
         if (response === "okay") {
             const newUser = {
-                id: uuidV4(),
+                userID: uuidV4(),
                 email,
                 password
             };

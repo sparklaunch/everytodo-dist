@@ -5,7 +5,7 @@ import { setCookie } from "../../shared/Cookie";
 import { generateJWTToken } from "../../utils/JWT";
 
 type User = {
-    id: string,
+    userID: string,
     email: string,
     password: string
 };
