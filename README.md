@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# ✔️ EveryTodo(에브리투두)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<br>
 
-## Available Scripts
+## 👋 프로젝트 소개
 
-In the project directory, you can run:
+<b> every todo는 할 일을 체크하는 투두리스트 프로젝트입니다. </b>
 
-### `yarn start`
+<br><br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🎨 와이어프레임
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![](https://velog.velcdn.com/images/marksen/post/71b48fb5-32f9-4c64-9214-b34e824a71ff/image.png)
 
-### `yarn test`
+<br><br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 👩🏻‍💻 팀원 🧑🏻‍💻
 
-### `yarn build`
+| 박세은                   | 김진욱            | 이요한                       | 정현진    |     |
+| ------------------------ | ----------------- | ---------------------------- | --------- | --- |
+| 상세TODO 조회 / 댓글CRUD | 로그인 / 회원가입 | TODO 조회 페이지 / TODO CRUD | TODO CRUD |
+| Front-end                | Front-end         | Front-end                    | Front-end |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<br><br>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🤟🏻 주요 기능
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `로그인 / 회원가입`
 
-### `yarn eject`
+- 회원가입 기능
+- 로그인 기능
+- 로그아웃 기능
+  - 로그아웃 시, 사용자 token 삭제
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### `메인 페이지`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- TODO 리스트 조회
+- TODO 삭제 기능
+- TODO 등록, 수정, 상세페이지 화면 이동 기능
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### `TODO 등록 페이지`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- TODO 등록 기능
 
-## Learn More
+### `TODO 상세 페이지`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- TODO 상세 데이터 조회
+- TODO 댓글 CRUD 기능
+- TODO 삭제 가능
+  - 상세 조회한 TODO 삭제 시, 해당 TODO의 댓글들도 삭제
+- TODO 수정페이지 이동 기능
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### `TODO 수정 페이지`
 
-### Code Splitting
+- TODO 수정 기능
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### `DB 연동 및 api 설계`
 
-### Analyzing the Bundle Size
+- json-server 이용
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<br><br>
 
-### Making a Progressive Web App
+## 🤟🏻 적용 기능
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- redux-toolkit
+- redux-thunk
+- axios
+- json-server
 
-### Advanced Configuration
+<br><br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 🤟🏻 프로젝트 시작하기
 
-### Deployment
+### clone repository
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```shell
+$ git clone https://github.com/marksenee/everytodo.git
+```
 
-### `yarn build` fails to minify
+### install
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```shell
+$ yarn install
+```
+
+### react start
+
+```shell
+$ yarn start
+```
