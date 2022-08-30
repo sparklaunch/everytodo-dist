@@ -17,6 +17,7 @@ import {
   TextStyle,
 } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
+import useToken from "../../hooks/useToken";
 
 function LookupTodo() {
   /* navigate */
@@ -72,6 +73,11 @@ function LookupTodo() {
 function LoopupTdoDetailComponent({ todo_id, todos, onDeleteTodo }) {
   // navigate
   const navigate = useNavigate();
+
+  // token
+  const token = useToken();
+  const userID = token();
+
   return (
     <>
       <ContainerStyle direction="row" transePose="space-between">
@@ -82,25 +88,31 @@ function LoopupTdoDetailComponent({ todo_id, todos, onDeleteTodo }) {
         >
           이전으로
         </StylePreviousButton>
-        <StyleButtonContainer>
-          <IconButton
-            aria-label="delete"
-            size="small"
-            onClick={() => navigate(`/edit/${todo_id}`)}
-          >
-            <CreateIcon />
-          </IconButton>{" "}
-          <IconButton
-            aria-label="delete"
-            size="small"
-            color="error"
-            onClick={() => {
-              onDeleteTodo(todo_id);
-            }}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </StyleButtonContainer>
+        <>
+          {userID ? (
+            <StyleButtonContainer>
+              <IconButton
+                aria-label="delete"
+                size="small"
+                onClick={() => navigate(`/edit/${todo_id}`)}
+              >
+                <CreateIcon />
+              </IconButton>{" "}
+              <IconButton
+                aria-label="delete"
+                size="small"
+                color="error"
+                onClick={() => {
+                  onDeleteTodo(todo_id);
+                }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </StyleButtonContainer>
+          ) : (
+            <></>
+          )}
+        </>
       </ContainerStyle>
       <ContainerStyle direction="column" transePose="center">
         <StyleTitle>
