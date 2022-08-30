@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const get_url = `http://localhost:5001/todos/`;
+const get_url = `http://localhost:3001/todos/`;
 
 /* InitialState */
 // data, isLoading, error로 상태관리
