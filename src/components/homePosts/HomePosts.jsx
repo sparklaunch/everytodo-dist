@@ -17,7 +17,7 @@ function HomePosts(props) {
         <div className="commentBox">
           <Link to={`/detail/${props.id}`}>
             <h3 className="title">{props.title}</h3>
-            <p className="comment">{props.comment}</p>
+            <p className="comment">{props.author}</p>
           </Link>
         </div>
       </div>
@@ -31,7 +31,7 @@ function HomePosts(props) {
         >
           <Link to={`/detail/${props.id}`}>
             <h3 className="title">{props.title}</h3>
-            <p className="comment">{props.comment}</p>
+            <p className="comment">{props.author}</p>
           </Link>
         </div>
         <span>

@@ -2,6 +2,8 @@ import './AddPost.css'
 import React from 'react'
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { __getAllTodos } from "../../redux/modules/todos";
 import {
     Button,
     TextField
@@ -13,7 +15,7 @@ import axios from 'axios';
 
 function AddPost(){
 
-    
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [title, settitle] = useState('');
@@ -29,19 +31,18 @@ function AddPost(){
 
 
     let data = {
-        "user_id": "user_id",
         "title": title,
-        "comment": comment,
+        "author": comment,
+        "user_id": "user_id"
     }
     // let todoList = useSelector((state=>state )) 
     // const dispatch = useDispatch()
     const AddPostBtn = (e) => {
         e.preventDefault()
         console.log('포스트 추가')
-        axios.post("http://localhost:5001/todos",data).then(response=>{
-            console.log(response)
+        axios.post("http://localhost:5001/posts",data).then(response=>{
+            dispatch(__getAllTodos())
         })
-
         navigate(-1)
     }
 

@@ -110,7 +110,7 @@ function LoopupTdoDetailComponent({ todo_id, todos, onDeleteTodo }) {
         </StyleTitle>
         <StyleContent>
           <TextStyle margin="10px 0px 0px 10px" fontSize="16px">
-            본문 : {todos.content}
+            본문 : {todos.author }
           </TextStyle>
         </StyleContent>
       </ContainerStyle>

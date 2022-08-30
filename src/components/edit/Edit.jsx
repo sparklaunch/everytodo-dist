@@ -34,7 +34,7 @@ function EditPost() {
     // dispatch
     const dispatch = useDispatch();
 
-<<<<<<< HEAD
+
     // [onChange] input onChange
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -113,44 +113,6 @@ function EditPost() {
         </>
     );
 }
-=======
-  return (
-    <>
-      <Header></Header>
-      <EditPostBox><EditPostForm>
-      <div >
-        <form >
-          <div >
-            <div>
-              <label>제목</label>
-              <TextField fullWidth input
-                placeholder="5자 이상 작성해주세요"
-                name="title"
-                value={title}
-                onChange={onChange}
-              />
-            </div>
-            <div>
-              <label>내용</label>
-              <TextField fullWidth input
-                placeholder="오늘은 뭘 해볼까요?"
-                name="content"
-                value={content}
-                onChange={onChange}
-              />
-            </div>
-          </div>
-          <div >
-            <Button variant="contained" onClick={() =>navigate(-1)}>이전으로</Button>
-            <Button variant="contained" onClick={() => onUpdatePost(inputs)}>수정하기</Button> 
-            {/* 수정하기 버튼 클릭시 홈 화면으로 이동해야함 */}
-          </div>
-        </form>
-        </div>
-        </EditPostForm></EditPostBox>
-    </>
-);
-  };
 
->>>>>>> c2bf727c5ff50ba939c746485f4202afb722aa31
+
 export default EditPost;

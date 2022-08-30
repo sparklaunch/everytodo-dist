@@ -14,19 +14,6 @@ function Home() {
   // navigate
   const navigate = useNavigate();
 
-  // const [todoList, setTodoList] = useState([])
-
-  // useEffect(() => {
-  //   let data = axios.get("http://localhost:5001/todos").then(response=>
-  //   response['data'])
-  //     console.log(data.then((result)=>{
-  //       console.log(result)
-  //       setTodoList(result)
-  //     }))
-  // }, []);
-
-  // console.log(todoList)
-
   // dispatch
   const dispatch = useDispatch();
 
@@ -52,7 +39,7 @@ function Home() {
             key={item.id}
             id={item.id}
             title={item.title}
-            comment={item.comment}
+            author ={item.author}
           />
         ))}
       </div>
