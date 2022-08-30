@@ -14,6 +14,7 @@ import {
   EditPostFormButton,
   NavigationButton,
 } from "./EditStyle";
+import useToken from "../../hooks/useToken";
 
 function EditPost() {
   // navigate
@@ -23,12 +24,16 @@ function EditPost() {
   const param = useParams();
   const todo_id = Number(param.id);
 
+  // token
+  const token = useToken();
+  const userID = token();
+
   // inputs
   const [inputs, setInputs] = useState({
     id: todo_id, // todoId 넣어주기
     title: "",
     content: "",
-    user_id: "",
+    userID: userID,
   });
 
   const { id, title, content } = inputs;
