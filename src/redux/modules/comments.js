@@ -9,33 +9,33 @@ const API_URL = `http://localhost:3001/comments`;
 // data, isLoading, error로 상태관리
 const initialState = {
   comments: [],
-  isLoding: false, // 서버에서 comments를 가져오는 상태를 나타내는 값 (초기값은 false)
-  error: null, //서버와 통신이 실패한 경우 서버에서 에러 메세지를 보내주고 그것을 담을 값, 초기에는 에러가 없으므로 Null
+  isLoding: false,
+  error: null,
 };
 
 /* Thunk function */
-// [GET - 특정 id에 해당하는 comment만 가져옴]
-export const _getComments = createAsyncThunk(
-  "getComments",
+// [GET - 특정 todoId comment 조회]
+export const __getComments = createAsyncThunk(
+  "GET_COMMENTS",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get(
+      const { data } = await axios.get(
         `http://localhost:3001/comments?todoId=${payload}`
-        // get_url + `?` + `todoId=${payload}`
       );
-      return thunkAPI.fulfillWithValue(data.data); // 네트워크 요청이 성공하면 dispatch해주는 기능
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error); //네트워크 요청이 실패한 경우 dispatch 해주는 기능
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
+
 // [POST]
 export const __addComments = createAsyncThunk(
   "ADD_COMMENTS",
   async (newComments, thunkAPI) => {
     try {
-      const response = await axios.post(API_URL, newComments);
-      return thunkAPI.fulfillWithValue(response.data);
+      const { data } = await axios.post(API_URL, newComments);
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -59,8 +59,8 @@ export const __updateComments = createAsyncThunk(
   async (getEditData, thunkAPI) => {
     const { id, updateComment } = getEditData;
     try {
-      const response = await axios.put(API_URL + `/` + id, updateComment);
-      return thunkAPI.fulfillWithValue(response.data);
+      const { data } = await axios.put(API_URL + `/` + id, updateComment);
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -69,7 +69,7 @@ export const __updateComments = createAsyncThunk(
 
 /* createSlice */
 // 리듀서 로직이 실행되면서 이 객체가 하나의 action creator가 되기 때문에 reducers만 만들면 됨
-export const commentsSlice = createSlice({
+export const comments = createSlice({
   name: "comments", // 모듈 이름
   initialState, // 초기 상태 값
   reducers: {
@@ -84,7 +84,7 @@ export const commentsSlice = createSlice({
   }, // 모듈의 Reducer 로직
   extraReducers: {
     /* Pending */
-    [_getComments.pending]: (state, action) => {
+    [__getComments.pending]: (state, action) => {
       state.isLoding = true; // 네트워크 요청 시작시, 로딩 상태를 true로 변경
     },
     [__addComments.pending]: (state, action) => {
@@ -97,7 +97,7 @@ export const commentsSlice = createSlice({
       state.isLoding = true;
     },
     /* Fulfilled */
-    [_getComments.fulfilled]: (state, action) => {
+    [__getComments.fulfilled]: (state, action) => {
       state.isLoding = false; // 네트워크 요청이 끝나서 false로 변경
       state.comments = action.payload; // store에 있는 comments에 서버에서 가져온 comments를 넣어줌
     },
@@ -115,7 +115,7 @@ export const commentsSlice = createSlice({
       );
     },
     /* Rejected */
-    [_getComments.rejected]: (state, action) => {
+    [__getComments.rejected]: (state, action) => {
       state.isLoding = false; // 에러가 발생, 네트워크 요청이 끝나서 false
       state.error = action.payload; //catch된 error 객체를 state.error에 넣어줌
     },
@@ -123,5 +123,5 @@ export const commentsSlice = createSlice({
 });
 
 /* export */
-export const { checkEdit } = commentsSlice.actions;
-export default commentsSlice.reducer;
+export const { checkEdit } = comments.actions;
+export default comments.reducer;

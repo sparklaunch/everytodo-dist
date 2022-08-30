@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  _getComments,
+  __getComments,
   __addComments,
   __deleteComments,
   checkEdit,
   __updateComments,
-} from "../../redux/modules/commentsSlice";
+} from "../../redux/modules/comments";
 import {
   StyleInputComment,
   StyleAddComment,
@@ -21,27 +21,27 @@ import useCommentInput from "../../hooks/useCommentInput";
 
 /* [댓글] 등록 및 조회 컴포넌트 */
 function CommentComponent() {
-  /* token */
+  //token
   const token = useToken();
   const userID = token();
 
-  /* navigate */
+  //navigate
   const navigate = useNavigate();
 
-  /* dispatch */
+  //dispatch
   const dispatch = useDispatch();
 
-  /* useParams */
+  //useParams
   const param = useParams();
   const todo_id = Number(param.id);
 
   /* Redux Store에서 Comments 데이터 가져오기 */
   const { isLoading, error, comments } = useSelector((state) => state.comments);
 
-  /* DateTime 설정 */
+  // custom hook
   const dateTime = useDateTime();
 
-  /* input 입력 상태 관리 */
+  // [input] custom hook
   const [inputs, setInputs, onChangeHandler] = useCommentInput({
     todoId: todo_id,
     userID: userID,
@@ -50,7 +50,6 @@ function CommentComponent() {
     editCheck: false,
   });
 
-  // 구조분해 할당으로 inputs에서 comment값 가져오기
   const { comment } = inputs;
 
   /* [POST] 댓글 등록하기 */
@@ -75,18 +74,18 @@ function CommentComponent() {
     }
   };
 
-  /* [DELETE] 댓글 삭제하기 */
+  /* [DELETE] 댓글 삭제 */
   const onDeleteComment = (id) => {
     dispatch(__deleteComments(id));
   };
 
-  /* [EDIT_CHECK] 댓글 상태 변경하기 */
+  /* [EDIT_CHECK] 댓글 상태 변경 */
   // 댓글 상태 변경은 db에는 변하지 않고, 프론트단에서만 변경상태 확인
   const onChangeEditStatus = (id) => {
     dispatch(checkEdit(id));
   };
 
-  /* [UDPATE] 댓글 업데이트하기 */
+  /* [UDPATE] 댓글 수정 */
   const onUpdateComment = (id, updateComment) => {
     // 댓글 등록 후, 등록한 댓글을 수정 버튼 누르고 바로 완료버튼 누를경우 데이터가 유실됨
     if (updateComment.comment === "") {
@@ -98,11 +97,11 @@ function CommentComponent() {
     }
   };
 
-  /* useEffect */
+  //useEffect
   useEffect(() => {
     // 특정 todo에 해당하는 comment만 가져와야 함
-    dispatch(_getComments(todo_id));
-  }, [dispatch]); // 값에 변경사항이 있을 때마다 리렌더링
+    dispatch(__getComments(todo_id));
+  }, [dispatch]);
 
   /* loading or error 상태일 때 보여줄 화면*/
   if (isLoading) {
