@@ -20,6 +20,34 @@ const initialState: StateType = {
     error: null
 };
 
+interface UserInfo {
+    email: string;
+    password: string;
+}
+
+export const loginUserThunk = createAsyncThunk(
+    "users/findUser",
+    async (userInfo: UserInfo, thunk) => {
+        try {
+            const { data } = await axios.get(
+                `http://localhost:3001/users?email=${userInfo.email}`
+            );
+            const user = data[0];
+            if (user) {
+                if (user.password === userInfo.password) {
+                    return thunk.fulfillWithValue(user);
+                } else {
+                    return thunk.rejectWithValue("Incorrect password.");
+                }
+            } else {
+                return thunk.rejectWithValue("No such user.");
+            }
+        } catch (error) {
+            return thunk.rejectWithValue(error);
+        }
+    }
+);
+
 export const createUserThunk = createAsyncThunk(
     "users/createUser",
     async (newUser: User, thunk) => {
@@ -72,6 +100,17 @@ const userSlice = createSlice({
                 state.isLoading = false;
             })
             .addCase(createUserThunk.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            });
+        builder
+            .addCase(loginUserThunk.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(loginUserThunk.fulfilled, (state) => {
+                state.isLoading = false;
+            })
+            .addCase(loginUserThunk.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });
