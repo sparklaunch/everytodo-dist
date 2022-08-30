@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+// get url
+const get_url = `http://localhost:3001/comments`;
 
 /* initialState */
 // data, isLoading, error로 상태관리
@@ -16,7 +18,8 @@ export const _getComments = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
-        `http://localhost:5001/comments?todoId=${payload}`
+        `http://localhost:3001/comments?todoId=${payload}`
+        // get_url + `?` + `todoId=${payload}`
       );
       return thunkAPI.fulfillWithValue(data.data); // 네트워크 요청이 성공하면 dispatch해주는 기능
     } catch (error) {
@@ -29,10 +32,7 @@ export const __addComments = createAsyncThunk(
   "ADD_COMMENTS",
   async (newComments, thunkAPI) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5001/comments",
-        newComments
-      );
+      const response = await axios.post(get_url, newComments);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -44,7 +44,8 @@ export const __deleteComments = createAsyncThunk(
   "DELETE_COMMENTS",
   async (id, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:5001/comments/${id}`);
+      console.log("댓글 delete", get_url + `/` + id);
+      await axios.delete(get_url + `/` + id);
       return thunkAPI.fulfillWithValue(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -57,10 +58,7 @@ export const __updateComments = createAsyncThunk(
   async (getEditData, thunkAPI) => {
     const { id, updateComment } = getEditData;
     try {
-      const response = await axios.put(
-        `http://localhost:5001/comments/${id}`,
-        updateComment
-      );
+      const response = await axios.put(get_url + id, updateComment);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
