@@ -40,7 +40,7 @@ function AddPost(){
     const AddPostBtn = (e) => {
         e.preventDefault()
         console.log('포스트 추가')
-        axios.post("http://localhost:5001/posts",data).then(response=>{
+        axios.post("http://localhost:5001/todos",data).then(response=>{
             dispatch(__getAllTodos())
         })
         navigate(-1)

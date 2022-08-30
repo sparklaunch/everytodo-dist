@@ -13,7 +13,7 @@ function FixButton(props) {
 
     const deleteCheck = () =>{
         if(window.confirm('삭제할래요?')){
-            axios.delete(`http://localhost:5001/posts/${props.id}`)
+            axios.delete(`http://localhost:5001/todos/${props.id}`)
             .then(() => dispatch(__getAllTodos()));
             alert('삭제완료!');
         } else {
