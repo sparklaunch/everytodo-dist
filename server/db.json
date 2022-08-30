@@ -1,3 +1,9 @@
 {
-    "users": []
+  "users": [
+    {
+      "id": "6f476aaa-c75a-4034-a28f-8fbe4dfaeebb",
+      "email": "redwoodnatlpark@gmail.com",
+      "password": "1234"
+    }
+  ]
 }
