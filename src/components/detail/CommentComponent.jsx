@@ -16,6 +16,8 @@ import {
 } from "./styles";
 import CommentListComponent from "./CommentListComponent";
 import useToken from "../../hooks/useToken";
+import useDateTime from "../../hooks/useDateTime";
+import useCommentInput from "../../hooks/useCommentInput";
 
 /* [댓글] 등록 및 조회 컴포넌트 */
 function CommentComponent() {
@@ -34,36 +36,22 @@ function CommentComponent() {
   const todo_id = Number(param.id);
 
   /* Redux Store에서 Comments 데이터 가져오기 */
-  // db에서 가져온 Comments들을 store에 저장하고, 해당 데이터를 useSelector로 가져옴
   const { isLoading, error, comments } = useSelector((state) => state.comments);
 
   /* DateTime 설정 */
-  let today = new Date();
-  let year = today.getFullYear();
-  let month = ("0" + (today.getMonth() + 1)).slice(-2);
-  let day = ("0" + today.getDate()).slice(-2);
-  let createDate = year + month + day;
+  const dateTime = useDateTime();
 
   /* input 입력 상태 관리 */
-  const [inputs, setInputs] = useState({
+  const [inputs, setInputs, onChangeHandler] = useCommentInput({
     todoId: todo_id,
     userID: userID,
     comment: "",
-    createdAt: createDate,
+    createdAt: dateTime,
     editCheck: false,
   });
 
   // 구조분해 할당으로 inputs에서 comment값 가져오기
   const { comment } = inputs;
-
-  /* 댓글 입력하기 */
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-  };
 
   /* [POST] 댓글 등록하기 */
   const onSubmitComment = (inputs) => {
@@ -74,13 +62,11 @@ function CommentComponent() {
         dispatch(__addComments(inputs));
 
         // Input 초기화
-        // 초기화 형태를 아래처럼 지정해줘야 db에 해당 Key, value가 저장됨
         setInputs({
           todoId: todo_id,
           userID: userID,
           comment: "",
-          userName: "",
-          createdAt: createDate,
+          createdAt: dateTime,
           editCheck: false,
         });
       }
@@ -135,7 +121,7 @@ function CommentComponent() {
           placeholder="댓글을 입력하세요"
           name="comment"
           value={comment || ""}
-          onChange={onChange}
+          onChange={onChangeHandler}
         />
         <StyleAddComment onClick={() => onSubmitComment(inputs)}>
           등록
