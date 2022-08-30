@@ -1,6 +1,7 @@
 /* Home과 같이 사용 */
 a:link { 
     text-decoration: none;
+    color: black;
    }    
 a:visited { 
     color: black;

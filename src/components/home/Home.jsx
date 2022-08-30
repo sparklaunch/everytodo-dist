@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect } from "react";
-
 import { useNavigate } from "react-router-dom";
 
 import Header from "../header/Header";
@@ -39,7 +38,7 @@ function Home() {
             key={item.id}
             id={item.id}
             title={item.title}
-            author ={item.author}
+            content ={item.content}
           />
         ))}
       </div>

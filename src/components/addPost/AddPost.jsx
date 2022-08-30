@@ -17,21 +17,21 @@ function AddPost() {
   const navigate = useNavigate();
 
   const [title, settitle] = useState("");
-  const [comment, setcomment] = useState("");
+  const [content, setcontent] = useState("");
   const [disabled, setdisabled] = useState(true);
 
   const inputValueChange = () => {
     settitle(document.getElementById("post-title").value);
-    setcomment(document.getElementById("post-comment").value);
+    setcontent(document.getElementById("post-comment").value);
 
-    title.length < 4 || comment.length < 1
+    title.length < 4 || content.length < 1
       ? setdisabled(true)
       : setdisabled(false);
   };
 
   let data = {
     title: title,
-    author: comment,
+    content: content,
     user_id: "user_id",
   };
   // let todoList = useSelector((state=>state ))
