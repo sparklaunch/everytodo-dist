@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Edit.css";
+// import "./Edit.css";
 import { useHistory, useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 import { Button, TextField } from "@mui/material";
@@ -8,100 +8,103 @@ import { useDispatch, useSelector } from "react-redux";
 import { __getTodos, __updateTodo } from "../../redux/modules/todos";
 
 function EditPost() {
-  // navigate
-  const navigate = useNavigate();
+    // navigate
+    const navigate = useNavigate();
 
-  // todoId useParmams 이용해서 가져오기
+    // todoId useParmams 이용해서 가져오기
 
-  // inputs
-  const [inputs, setInputs] = useState({
-    id: 2, // todoId 넣어주기
-    title: "",
-    content: "",
-  });
-
-  const { id, title, content } = inputs;
-
-  // useSelect
-  const { todos } = useSelector((state) => state.todos);
-  console.log("data확인", todos); //
-
-  // dispatch
-  const dispatch = useDispatch();
-
-  // [onChange] input onChange
-  const onChange = (e) => {
-    const { name, value } = e.target;
-
-    // setInputs
-    setInputs({
-      ...inputs,
-      [name]: value,
+    // inputs
+    const [inputs, setInputs] = useState({
+        id: 2, // todoId 넣어주기
+        title: "",
+        content: ""
     });
-  };
 
-  // [UPDATE] edit function
-  const onUpdatePost = (updateData) => {
-    console.log("update", updateData);
-    dispatch(__updateTodo(updateData));
+    const { id, title, content } = inputs;
 
-    if (updateData) {
-      alert("정말 수정하시겠습니까?");
-      dispatch(__updateTodo(updateData));
-      alert("수정이 완료되었습니다.");
-      navigate(`/`);
-    }
-  };
+    // useSelect
+    const { todos } = useSelector((state) => state.todos);
+    console.log("data확인", todos); //
 
-  // useEffect
-  useEffect(() => {
-    dispatch(__getTodos(2)); //todoId 넣어주기
-  }, [dispatch]);
+    // dispatch
+    const dispatch = useDispatch();
 
-  return (
-    <>
-      <Header></Header>
-      <div className="edit-post-box">
-        <form className="edit-post-form">
-          <div className="edit-inputs">
-            <div>
-              <label>제목</label>
-              {/* <TextField
+    // [onChange] input onChange
+    const onChange = (e) => {
+        const { name, value } = e.target;
+
+        // setInputs
+        setInputs({
+            ...inputs,
+            [name]: value
+        });
+    };
+
+    // [UPDATE] edit function
+    const onUpdatePost = (updateData) => {
+        console.log("update", updateData);
+        dispatch(__updateTodo(updateData));
+
+        if (updateData) {
+            alert("정말 수정하시겠습니까?");
+            dispatch(__updateTodo(updateData));
+            alert("수정이 완료되었습니다.");
+            navigate(`/`);
+        }
+    };
+
+    // useEffect
+    useEffect(() => {
+        dispatch(__getTodos(2)); //todoId 넣어주기
+    }, [dispatch]);
+
+    return (
+        <>
+            <Header></Header>
+            <div className="edit-post-box">
+                <form className="edit-post-form">
+                    <div className="edit-inputs">
+                        <div>
+                            <label>제목</label>
+                            {/* <TextField
                 fullWidth
                 label="5자 이상 작성해주세요!"
                 id="edit-title"
               /> */}
-              <input
-                placeholder="5자 이상 작성해주세요"
-                name="title"
-                value={title}
-                onChange={onChange}
-              />
-            </div>
-            <div>
-              <label>내용</label>
-              {/* <TextField
+                            <input
+                                placeholder="5자 이상 작성해주세요"
+                                name="title"
+                                value={title}
+                                onChange={onChange}
+                            />
+                        </div>
+                        <div>
+                            <label>내용</label>
+                            {/* <TextField
                 fullWidth
                 label="오늘은 뭘 해볼까요?"
                 id="edit-comment"
               /> */}
-              <input
-                placeholder="오늘은 뭘 해볼까요?"
-                name="content"
-                value={content}
-                onChange={onChange}
-              />
+                            <input
+                                placeholder="오늘은 뭘 해볼까요?"
+                                name="content"
+                                value={content}
+                                onChange={onChange}
+                            />
+                        </div>
+                    </div>
+                    <div className="edit-btns">
+                        <Button variant="contained">이전으로</Button>
+                        <Button
+                            variant="contained"
+                            onClick={() => onUpdatePost(inputs)}
+                        >
+                            수정하기
+                        </Button>
+                    </div>
+                </form>
             </div>
-          </div>
-          <div className="edit-btns">
-            <Button variant="contained">이전으로</Button>
-            <Button variant="contained" onClick={() => onUpdatePost(inputs)}>
-              수정하기
-            </Button>
-          </div>
-        </form>
-      </div>
-    </>
-  );
+        </>
+    );
 }
 export default EditPost;

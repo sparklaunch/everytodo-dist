@@ -1,3 +1,4 @@
+import scorePassword from "../../utils/scorePassword";
 import {
     SignupContainer,
     SignupForm,
@@ -16,11 +17,15 @@ import {
     Typography,
     Fade
 } from "@mui/material";
-import { StateType } from "../../redux/modules/users";
-import { useState, ChangeEvent, useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { createUser } from "../../redux/modules/users";
+import { useState, useEffect, useMemo } from "react";
 import { v4 as uuidV4 } from "uuid";
+import { createUserThunk, getUsersThunk } from "../../redux/modules/users";
+import { useAppDispatch } from "../../redux/config/configStore";
+import useInput from "../../hooks/useInput";
+import useRedundancyCheck from "../../hooks/useRedundancyCheck";
+import useEmailValidation from "../../hooks/useEmailValidation";
+import usePasswordScore from "../../hooks/usePasswordScore";
+import useValidation from "../../hooks/useValidation";
 
 const boxStyle = {
     position: "absolute",
@@ -34,79 +39,53 @@ const boxStyle = {
     p: 4
 };
 
-function scorePassword(password: string) {
-    let score = 0;
-    if (!password) {
-        return score;
-    }
-    interface Letter {
-        [key: string]: number;
-    }
-    let letters: Letter = {};
-    for (let i = 0; i < password.length; i++) {
-        letters[password[i]] = (letters[password[i]] || 0) + 1;
-        score += 5.0 / letters[password[i]];
-    }
-    interface Variation {
-        [key: string]: boolean;
-    }
-    const variations: Variation = {
-        digits: /\d/.test(password),
-        lower: /[a-z]/.test(password),
-        upper: /[A-Z]/.test(password),
-        nonWords: /\W/.test(password)
-    };
-    let variationCount = 0;
-    for (const check in variations) {
-        variationCount += variations[check] ? 1 : 0;
-    }
-    score += (variationCount - 1) * 10;
-    return score;
-}
-
 const Signup = () => {
-    const emailRegex =
-        /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    const users = useSelector((state: StateType) => state.users);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+    useEffect(() => {
+        dispatch(getUsersThunk());
+    }, [dispatch]);
+
+    const redundancyChecker = useRedundancyCheck();
+    const emailValidator = useEmailValidation();
+    const passwordScorer = usePasswordScore();
+    const validator = useValidation();
+
     const [open, setOpen] = useState({
         state: false,
         target: "email"
     });
+
     const modalMessage = useMemo(() => {
         switch (open.target) {
-            case "email":
-                return "이메일을 입력하세요.";
-            case "password":
-                return "비밀번호를 입력하세요.";
-            case "mismatch":
-                return "비밀번호가 일치하지 않습니다.";
+            case "emptyEmail":
+                return "이메일을 입력하세요";
             case "invalidEmail":
                 return "올바른 이메일 형식이 아닙니다.";
-            case "redundancy":
+            case "redundantEmail":
                 return "해당 이메일이 이미 존재합니다.";
+            case "emptyPassword":
+                return "비밀번호를 입력하세요";
+            case "unmatchedPassword":
+                return "비밀번호가 일치하지 않습니다.";
             case "okay":
                 return "사용 가능한 이메일입니다.";
+            case "unknown":
+                return "알 수 없는 오류가 발생하였습니다.";
         }
     }, [open.target]);
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const [passwordScore, setPasswordScore] = useState(0);
     const [passwordScoreLabel, setPasswordScoreLabel] = useState("약함");
     const [passwordConfirmationLabel, setPasswordConfirmationLabel] =
         useState("비밀번호 불일치");
-    useEffect(() => {
-        const score = scorePassword(password);
-        setPasswordScore(Math.min(score, 100));
-        if (score < 30) {
-            setPasswordScoreLabel("약함");
-        } else if (score < 60) {
-            setPasswordScoreLabel("보통");
-        } else {
-            setPasswordScoreLabel("강함");
-        }
-    }, [password]);
+
+    const [email, setEmail, emailChangeHandler] = useInput("");
+    const [password, setPassword, passwordChangeHandler] = useInput("");
+    const [
+        passwordConfirmation,
+        setPasswordConfirmation,
+        passwordConfirmationChangeHandler
+    ] = useInput("");
+
     useEffect(() => {
         if (password === passwordConfirmation && password.length !== 0) {
             setPasswordConfirmationLabel("비밀번호 일치");
@@ -114,94 +93,88 @@ const Signup = () => {
             setPasswordConfirmationLabel("비밀번호 불일치");
         }
     }, [password, passwordConfirmation]);
-    const emailHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setEmail(event.target.value);
-    };
-    const passwordHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setPassword(event.target.value);
-    };
-    const passwordConfirmationHandler = (
-        event: ChangeEvent<HTMLInputElement>
-    ) => {
-        setPasswordConfirmation(event.target.value);
-    };
-    const checkRedundancy = () => {
-        const isNotEmpty = Array.isArray(users) && users.length;
-        if (isNotEmpty && users.find((user) => user.email === email)) {
-            setOpen(() => {
-                return {
-                    state: true,
-                    target: "redundancy"
-                };
+    useEffect(() => {
+        const labelString = passwordScorer(password);
+        setPasswordScore(Math.min(100, scorePassword(password)));
+        setPasswordScoreLabel(labelString);
+    }, [password, passwordScorer]);
+    const redundancyButtonClickHandler = () => {
+        if (email.length === 0) {
+            setOpen({
+                target: "emptyEmail",
+                state: true
             });
-        } else if (email.length === 0) {
-            setOpen(() => {
-                return {
-                    state: true,
-                    target: "email"
-                };
+        } else if (!emailValidator(email)) {
+            setOpen({
+                target: "invalidEmail",
+                state: true
             });
-        } else if (!emailRegex.test(email)) {
-            setOpen(() => {
-                return {
-                    state: true,
-                    target: "invalidEmail"
-                };
+        } else if (redundancyChecker(email)) {
+            setOpen({
+                target: "redundantEmail",
+                state: true
             });
         } else {
-            setOpen(() => {
-                return {
-                    state: true,
-                    target: "okay"
-                };
+            setOpen({
+                target: "okay",
+                state: true
             });
         }
     };
-    const signupHandler = () => {
-        if (
-            email.length !== 0 &&
-            password.length !== 0 &&
-            password === passwordConfirmation &&
-            emailRegex.test(email)
-        ) {
+    const signupClickHandler = () => {
+        const response = validator({
+            email,
+            password,
+            passwordConfirmation
+        });
+        if (response === "okay") {
             const newUser = {
                 id: uuidV4(),
                 email,
                 password
             };
-            dispatch(createUser(newUser));
             setEmail("");
             setPassword("");
             setPasswordConfirmation("");
+            dispatch(createUserThunk(newUser));
         } else {
-            if (email.length === 0) {
-                setOpen(() => {
-                    return {
+            switch (response) {
+                case "emptyEmail":
+                    setOpen({
                         state: true,
-                        target: "email"
-                    };
-                });
-            } else if (password.length === 0) {
-                setOpen(() => {
-                    return {
+                        target: "emptyEmail"
+                    });
+                    break;
+                case "emptyPassword":
+                    setOpen({
                         state: true,
-                        target: "password"
-                    };
-                });
-            } else if (password !== passwordConfirmation) {
-                setOpen(() => {
-                    return {
-                        state: true,
-                        target: "mismatch"
-                    };
-                });
-            } else if (!emailRegex.test(email)) {
-                setOpen(() => {
-                    return {
+                        target: "emptyPassword"
+                    });
+                    break;
+                case "invalidEmail":
+                    setOpen({
                         state: true,
                         target: "invalidEmail"
-                    };
-                });
+                    });
+                    break;
+                case "redundantEmail":
+                    setOpen({
+                        state: true,
+                        target: "redundantEmail"
+                    });
+                    break;
+                case "unmatchedPassword":
+                    setOpen({
+                        state: true,
+                        target: "unmatchedPassword"
+                    });
+                    break;
+                default:
+                    setOpen({
+                        state: true,
+                        target: "unknown"
+                    });
+                    break;
             }
         }
     };
@@ -219,14 +192,14 @@ const Signup = () => {
                         required
                         variant="outlined"
                         value={email}
-                        onChange={emailHandler}
+                        onChange={emailChangeHandler}
                         sx={{ width: 300 }}
                     />
                     <Tooltip title="중복확인">
                         <Button
                             variant="contained"
                             size="large"
-                            onClick={checkRedundancy}
+                            onClick={redundancyButtonClickHandler}
                         >
                             중복확인
                         </Button>
@@ -236,7 +209,7 @@ const Signup = () => {
                     <label htmlFor="password">비밀번호</label>
                     <TextField
                         value={password}
-                        onChange={passwordHandler}
+                        onChange={passwordChangeHandler}
                         required
                         id="password"
                         label="비밀번호"
@@ -258,7 +231,7 @@ const Signup = () => {
                     <label htmlFor="password-confirmation">비밀번호 확인</label>
                     <TextField
                         value={passwordConfirmation}
-                        onChange={passwordConfirmationHandler}
+                        onChange={passwordConfirmationChangeHandler}
                         required
                         id="password-confirmation"
                         label="비밀번호 확인"
@@ -276,7 +249,7 @@ const Signup = () => {
                 variant="contained"
                 size="large"
                 sx={{ width: 300 }}
-                onClick={signupHandler}
+                onClick={signupClickHandler}
             >
                 회원가입
             </Button>
