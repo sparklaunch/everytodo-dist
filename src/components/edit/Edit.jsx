@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import "./Edit.css";
 import { useHistory, useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 import { Button, TextField } from "@mui/material";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { __getTodos, __updateTodo } from "../../redux/modules/todos";
+import {EditPostBox,
+    EditPostForm,
+    PostInputs,
+    EditPostFormButton}
+    from './EditStyle';
 
 function EditPost() {
   // navigate
@@ -61,17 +65,13 @@ function EditPost() {
   return (
     <>
       <Header></Header>
-      <div className="edit-post-box">
-        <form className="edit-post-form">
-          <div className="edit-inputs">
+      <EditPostBox><EditPostForm>
+      <div >
+        <form >
+          <div >
             <div>
               <label>제목</label>
-              {/* <TextField
-                fullWidth
-                label="5자 이상 작성해주세요!"
-                id="edit-title"
-              /> */}
-              <input
+              <TextField fullWidth input
                 placeholder="5자 이상 작성해주세요"
                 name="title"
                 value={title}
@@ -80,12 +80,7 @@ function EditPost() {
             </div>
             <div>
               <label>내용</label>
-              {/* <TextField
-                fullWidth
-                label="오늘은 뭘 해볼까요?"
-                id="edit-comment"
-              /> */}
-              <input
+              <TextField fullWidth input
                 placeholder="오늘은 뭘 해볼까요?"
                 name="content"
                 value={content}
@@ -93,15 +88,16 @@ function EditPost() {
               />
             </div>
           </div>
-          <div className="edit-btns">
-            <Button variant="contained">이전으로</Button>
-            <Button variant="contained" onClick={() => onUpdatePost(inputs)}>
-              수정하기
-            </Button>
+          <div >
+            <Button variant="contained" onClick={() =>navigate(-1)}>이전으로</Button>
+            <Button variant="contained" onClick={() => onUpdatePost(inputs)}>수정하기</Button> 
+            {/* 수정하기 버튼 클릭시 홈 화면으로 이동해야함 */}
           </div>
         </form>
-      </div>
+        </div>
+        </EditPostForm></EditPostBox>
     </>
-  );
-}
+);
+  };
+
 export default EditPost;
