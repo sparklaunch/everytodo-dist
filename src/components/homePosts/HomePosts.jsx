@@ -1,17 +1,19 @@
 import React from "react";
 import { useNavigate} from "react-router-dom";
-
+import useToken from "../../hooks/useToken";
 import "./HomePosts.css";
 import FixButton from "./FixBtn";
 
-import { useState } from "react";
+
 import { Link } from "react-router-dom";
 
 function HomePosts(props) {
-  const [login, setLogin] = useState(false);
   const navigate = useNavigate();
-
-  if (login === true) {
+  
+  const token = useToken();
+  
+  
+  if (token() === null) {
     return (
       <div className="postList">
         <div className="commentBox">
