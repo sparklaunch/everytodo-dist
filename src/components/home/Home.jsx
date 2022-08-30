@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../header/Header";
@@ -8,16 +8,13 @@ import axios from "axios";
 import { Button } from "@mui/material";
 import { __getAllTodos } from "../../redux/modules/todos";
 import { useDispatch, useSelector } from "react-redux";
-import { getCookie } from "../../shared/Cookie";
+
 import useToken from "../../hooks/useToken";
 
 function Home() {
+  const token = useToken();
   // navigate
   const navigate = useNavigate();
-
-  //get token
-  const token = useToken();
-  console.log("myid", token());
 
   // dispatch
   const dispatch = useDispatch();
@@ -34,7 +31,12 @@ function Home() {
       <Header />
       <div className="listTop">
         <h1>뭐할까용</h1>
-        <Button variant="contained" onClick={() => navigate("/addPost")}>
+        <Button
+          variant="contained"
+          onClick={() =>
+            token() !== null ? navigate("/addPost") : alert("로그인 해주세요!")
+          }
+        >
           글쓰기
         </Button>
       </div>
