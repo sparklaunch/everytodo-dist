@@ -9,12 +9,16 @@ import { Button, TextField } from "@mui/material";
 import HeaderStyle from "../../components/header/Header";
 
 import axios from "axios";
+import useToken from "../../hooks/useToken";
 
 function AddPost() {
   const get_url = `http://localhost:3001/todos`;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const token = useToken();
+  const userID = token();
 
   const [title, settitle] = useState("");
   const [content, setcontent] = useState("");
@@ -32,7 +36,7 @@ function AddPost() {
   let data = {
     title: title,
     content: content,
-    user_id: "user_id",
+    userID: userID,
   };
   // let todoList = useSelector((state=>state ))
   // const dispatch = useDispatch()
