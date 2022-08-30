@@ -15,9 +15,14 @@ import {
   TextStyle,
 } from "./styles";
 import CommentListComponent from "./CommentListComponent";
+import useToken from "../../hooks/useToken";
 
 /* [댓글] 등록 및 조회 컴포넌트 */
 function CommentComponent() {
+  /* token */
+  const token = useToken();
+  const userID = token();
+
   /* navigate */
   const navigate = useNavigate();
 
@@ -42,12 +47,12 @@ function CommentComponent() {
   /* input 입력 상태 관리 */
   const [inputs, setInputs] = useState({
     todoId: todo_id,
-    userId: "",
+    userID: userID,
     comment: "",
-    userName: "",
     createdAt: createDate,
     editCheck: false,
   });
+
   // 구조분해 할당으로 inputs에서 comment값 가져오기
   const { comment } = inputs;
 
@@ -62,22 +67,26 @@ function CommentComponent() {
 
   /* [POST] 댓글 등록하기 */
   const onSubmitComment = (inputs) => {
-    if (comment === "") {
-      alert("댓글을 입력하세요");
-    } else {
-      dispatch(__addComments(inputs));
-    }
+    if (userID) {
+      if (comment === "") {
+        alert("댓글을 입력하세요");
+      } else {
+        dispatch(__addComments(inputs));
 
-    // Input 초기화
-    // 초기화 형태를 아래처럼 지정해줘야 db에 해당 Key, value가 저장됨
-    setInputs({
-      todoId: todo_id,
-      userId: "",
-      comment: "",
-      userName: "",
-      createdAt: createDate,
-      editCheck: false,
-    });
+        // Input 초기화
+        // 초기화 형태를 아래처럼 지정해줘야 db에 해당 Key, value가 저장됨
+        setInputs({
+          todoId: todo_id,
+          userID: userID,
+          comment: "",
+          userName: "",
+          createdAt: createDate,
+          editCheck: false,
+        });
+      }
+    } else {
+      alert("로그인이 필요합니다!");
+    }
   };
 
   /* [DELETE] 댓글 삭제하기 */

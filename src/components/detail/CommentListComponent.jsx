@@ -9,6 +9,7 @@ import {
   TextStyle,
   StyleUpdateComment,
 } from "./styles";
+import useToken from "../../hooks/useToken";
 
 /* [댓글] 리스트 조회 및 수정, 삭제 컴포넌트 */
 function CommentListComponent({
@@ -47,6 +48,10 @@ function CommentItemComponent({
   onChangeEditStatus,
   onUpdateComment,
 }) {
+  // token
+  const token = useToken();
+  const userID = token();
+
   /* DateTime 설정 */
   let today = new Date();
   let year = today.getFullYear();
@@ -57,7 +62,7 @@ function CommentItemComponent({
   /* 댓글 입력 inputs 상태 */
   const [inputs, setInputs] = useState({
     todoId: todo_id,
-    userId: "",
+    userID: userID,
     comment: "",
     userName: "",
     createdAt: createDate,
@@ -73,44 +78,74 @@ function CommentItemComponent({
   };
   return (
     <>
-      {/* editCheck 상태이면 수정, 삭제 버튼 */}
-      {!editCheck ? (
-        <StyleCommentItem>
-          <CommentContainerStyle direction="row" transePose="space-between">
-            <CommentContainerStyle direction="column" margin="5px 0px 0px 10px">
-              <TextStyle margin="7px 0px 5px 5px" fontSize="16px">
-                {comment}
-              </TextStyle>
-              <TextStyle margin="0px 0px 0px 5px" fontSize="14px">
-                {userName}
-              </TextStyle>
-            </CommentContainerStyle>
-            <CommentContainerStyle direction="row" margin="10px 10px 0px 5px">
-              <IconButton
-                aria-label="delete"
-                size="small"
-                onClick={() => onChangeEditStatus(id)}
+      {userID ? (
+        !editCheck ? (
+          <StyleCommentItem>
+            <CommentContainerStyle direction="row" transePose="space-between">
+              <CommentContainerStyle
+                direction="column"
+                margin="5px 0px 0px 10px"
               >
-                <CreateIcon />
-              </IconButton>{" "}
-              <IconButton
-                aria-label="delete"
-                size="small"
-                color="error"
-                onClick={() => onDeleteComment(id)}
-              >
-                <DeleteIcon />
-              </IconButton>
+                <TextStyle margin="7px 0px 5px 5px" fontSize="16px">
+                  {comment}
+                </TextStyle>
+                <TextStyle margin="0px 0px 0px 5px" fontSize="14px">
+                  {userName}
+                </TextStyle>
+              </CommentContainerStyle>
+              <CommentContainerStyle direction="row" margin="10px 10px 0px 5px">
+                <IconButton
+                  aria-label="delete"
+                  size="small"
+                  onClick={() => onChangeEditStatus(id)}
+                >
+                  <CreateIcon />
+                </IconButton>{" "}
+                <IconButton
+                  aria-label="delete"
+                  size="small"
+                  color="error"
+                  onClick={() => onDeleteComment(id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </CommentContainerStyle>
             </CommentContainerStyle>
-          </CommentContainerStyle>
-        </StyleCommentItem>
+          </StyleCommentItem>
+        ) : (
+          <StyleCommentItem>
+            <CommentContainerStyle direction="row" transePose="space-between">
+              <CommentContainerStyle
+                direction="column"
+                margin="5px 0px 0px 10px"
+              >
+                <StyleUpdateComment
+                  name="comment"
+                  defaultValue={comment}
+                  onChange={onChange}
+                />
+                <TextStyle margin="0px 0px 0px 5px" fontSize="14px">
+                  {userName}
+                </TextStyle>
+              </CommentContainerStyle>
+              <CommentContainerStyle direction="row" margin="10px 0px 0px 0px">
+                <Button variant="text" onClick={() => onChangeEditStatus(id)}>
+                  취소
+                </Button>
+                <Button
+                  variant="text"
+                  onClick={() => onUpdateComment(id, inputs)}
+                >
+                  완료
+                </Button>
+              </CommentContainerStyle>
+            </CommentContainerStyle>
+          </StyleCommentItem>
+        )
       ) : (
         <StyleCommentItem>
           <CommentContainerStyle direction="row" transePose="space-between">
             <CommentContainerStyle direction="column" margin="5px 0px 0px 10px">
-              {/* <TextStyle margin="7px 0px 5px 5px" fontSize="16px">
-                {comment}
-              </TextStyle> */}
               <StyleUpdateComment
                 name="comment"
                 defaultValue={comment}
@@ -119,17 +154,6 @@ function CommentItemComponent({
               <TextStyle margin="0px 0px 0px 5px" fontSize="14px">
                 {userName}
               </TextStyle>
-            </CommentContainerStyle>
-            <CommentContainerStyle direction="row" margin="10px 0px 0px 0px">
-              <Button variant="text" onClick={() => onChangeEditStatus(id)}>
-                취소
-              </Button>
-              <Button
-                variant="text"
-                onClick={() => onUpdateComment(id, inputs)}
-              >
-                완료
-              </Button>
             </CommentContainerStyle>
           </CommentContainerStyle>
         </StyleCommentItem>

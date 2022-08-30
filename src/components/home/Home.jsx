@@ -12,43 +12,44 @@ import { getCookie } from "../../shared/Cookie";
 import useToken from "../../hooks/useToken";
 
 function Home() {
-    // navigate
-    const navigate = useNavigate();
+  // navigate
+  const navigate = useNavigate();
 
-    // dispatch
-    const dispatch = useDispatch();
+  //get token
+  const token = useToken();
+  console.log("myid", token());
 
-    // useSeletor
-    const { todos } = useSelector((state) => state.todos);
+  // dispatch
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(__getAllTodos());
-    }, [dispatch]);
+  // useSeletor
+  const { todos } = useSelector((state) => state.todos);
 
-    return (
-        <>
-            <Header />
-            <div className="listTop">
-                <h1>뭐할까용</h1>
-                <Button
-                    variant="contained"
-                    onClick={() => navigate("/addPost")}
-                >
-                    글쓰기
-                </Button>
-            </div>
-            <div className="listBody">
-                {todos.map((item) => (
-                    <HomePosts
-                        key={item.id}
-                        id={item.id}
-                        title={item.title}
-                        content={item.content}
-                    />
-                ))}
-            </div>
-        </>
-    );
+  useEffect(() => {
+    dispatch(__getAllTodos());
+  }, [dispatch]);
+
+  return (
+    <>
+      <Header />
+      <div className="listTop">
+        <h1>뭐할까용</h1>
+        <Button variant="contained" onClick={() => navigate("/addPost")}>
+          글쓰기
+        </Button>
+      </div>
+      <div className="listBody">
+        {todos.map((item) => (
+          <HomePosts
+            key={item.id}
+            id={item.id}
+            title={item.title}
+            content={item.content}
+          />
+        ))}
+      </div>
+    </>
+  );
 }
 
 export default Home;
