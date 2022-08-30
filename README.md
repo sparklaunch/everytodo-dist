@@ -58,7 +58,7 @@
 
 <br>
 
-## 🤟🏻 적용 기능
+## 💻 적용 기능
 
 - redux-toolkit
 - redux-thunk
@@ -67,7 +67,7 @@
 
 <br>
 
-## 🤟🏻 프로젝트 시작하기
+## 🏃🏻 프로젝트 시작하기
 
 ### clone repository
 
