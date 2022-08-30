@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const get_url = `http://localhost:5001/todos/`;
+
 /* InitialState */
 // data, isLoading, error로 상태관리
 const initialState = {
@@ -15,7 +17,7 @@ export const __getAllTodos = createAsyncThunk(
   "GET_ALL_TODOS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get("http://localhost:5001/posts");
+      const { data } = await axios.get(get_url);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -28,7 +30,8 @@ export const __getTodos = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5001/posts/${payload}`
+        get_url + payload
+        // `http://localhost:5001/todos/${payload}`
       );
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
@@ -42,7 +45,7 @@ export const __deleteTodo = createAsyncThunk(
   "DELETE_TODOS",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:5001/posts/${payload}`);
+      await axios.delete(get_url + payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -55,10 +58,7 @@ export const __updateTodo = createAsyncThunk(
   "UPDATAE_TODOS",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.put(
-        `http://localhost:5001/posts/${payload.id}`,
-        payload
-      );
+      const response = await axios.put(get_url + payload.id, payload);
       console.log("response", response);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
