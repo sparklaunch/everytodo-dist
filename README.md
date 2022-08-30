@@ -1,18 +1,16 @@
 # ✔️ EveryTodo(에브리투두)
 
-<br>
-
 ## 👋 프로젝트 소개
 
 <b> every todo는 할 일을 체크하는 투두리스트 프로젝트입니다. </b>
 
-<br><br>
+<br>
 
 ## 🎨 와이어프레임
 
 ![](https://velog.velcdn.com/images/marksen/post/71b48fb5-32f9-4c64-9214-b34e824a71ff/image.png)
 
-<br><br>
+<br>
 
 ## 👩🏻‍💻 팀원 🧑🏻‍💻
 
@@ -21,7 +19,7 @@
 | 상세TODO 조회 / 댓글CRUD | 로그인 / 회원가입 | TODO 조회 페이지 / TODO CRUD | TODO CRUD |
 | Front-end                | Front-end         | Front-end                    | Front-end |
 
-<br><br>
+<br>
 
 ## 🤟🏻 주요 기능
 
@@ -58,7 +56,7 @@
 
 - json-server 이용
 
-<br><br>
+<br>
 
 ## 🤟🏻 적용 기능
 
@@ -67,7 +65,7 @@
 - axios
 - json-server
 
-<br><br>
+<br>
 
 ## 🤟🏻 프로젝트 시작하기
 
