@@ -10,6 +10,8 @@ import {
   StyleUpdateComment,
 } from "./styles";
 import useToken from "../../hooks/useToken";
+import useDateTime from "../../hooks/useDateTime";
+import useCommentInput from "../../hooks/useCommentInput";
 
 /* [댓글] 리스트 조회 및 수정, 삭제 컴포넌트 */
 function CommentListComponent({
@@ -53,29 +55,17 @@ function CommentItemComponent({
   const userID = token();
 
   /* DateTime 설정 */
-  let today = new Date();
-  let year = today.getFullYear();
-  let month = ("0" + (today.getMonth() + 1)).slice(-2);
-  let day = ("0" + today.getDate()).slice(-2);
-  let createDate = year + month + day;
+  const dateTime = useDateTime();
 
-  /* 댓글 입력 inputs 상태 */
-  const [inputs, setInputs] = useState({
+  /* 댓글 입력 */
+  const [inputs, setInput, onChangeHandler] = useCommentInput({
     todoId: todo_id,
     userID: userID,
     comment: "",
-    userName: "",
-    createdAt: createDate,
+    createdAt: dateTime,
     editCheck: false,
   });
-  /* 댓글 입력하기 */
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-  };
+
   return (
     <>
       {userID ? (
@@ -122,7 +112,7 @@ function CommentItemComponent({
                 <StyleUpdateComment
                   name="comment"
                   defaultValue={comment}
-                  onChange={onChange}
+                  onChange={onChangeHandler}
                 />
                 <TextStyle margin="0px 0px 0px 5px" fontSize="14px">
                   {userName}
@@ -149,7 +139,7 @@ function CommentItemComponent({
               <StyleUpdateComment
                 name="comment"
                 defaultValue={comment}
-                onChange={onChange}
+                onChange={onChangeHandler}
               />
               <TextStyle margin="0px 0px 0px 5px" fontSize="14px">
                 {userName}
