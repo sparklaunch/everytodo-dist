@@ -56,7 +56,7 @@ export const __updateComments = createAsyncThunk(
   async (getEditData, thunkAPI) => {
     const { id, updateComment } = getEditData;
     try {
-      const { data } = await axios.put(
+      const { data } = await axios.patch(
         API_COMMENT_URL + `/` + id,
         updateComment
       );
