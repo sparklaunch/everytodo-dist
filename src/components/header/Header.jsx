@@ -4,13 +4,11 @@ import LogoNameStyleStyle from "./css/LogoNameStyle";
 import Logo from "../../image/Logo.png";
 
 import Button from '@mui/material/Button';
-
+import { ButtonGroup } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
-
 import useToken from "../../hooks/useToken";
 import Cookies from 'universal-cookie';
-
 
 function Header() {
   const token = useToken();
@@ -24,17 +22,31 @@ function Header() {
     } else {
       navigate("/login");
     }
+  } 
+
+  const onSignUp = () =>{
+    navigate('/signup')
   }
-  
   return (
     <>
       <HeaderStyle>
         <LogoStyle src={Logo}></LogoStyle>
         <LogoNameStyleStyle>EVERY TODO</LogoNameStyleStyle>
-        <Button variant="contained" onClick={logInOut}>{token() !== null ? 'Logout' : 'Login'}</Button>
+        <ButtonGroup
+            disableElevation
+            variant="contained"
+            aria-label="Disabled elevation buttons"
+            >
+            <Button style={{"height":'40px'}}
+                    variant="contained"
+                    onClick={logInOut}>{token() !== null ? 'Logout' : 'Login'}
+            </Button>
+            <Button style={{"height":'40px'}}
+                    onClick={onSignUp}>회원가입
+            </Button>
+          </ButtonGroup>
       </HeaderStyle>
     </>
   );
 }
-
 export default Header;
