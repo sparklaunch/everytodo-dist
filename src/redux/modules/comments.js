@@ -2,8 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 /* URL */
-// const API_URL = process.env.REACT_APP_API_URL;
-const API_URL = `http://localhost:3001/comments`;
+const API_COMMENT_URL = process.env.REACT_APP_API_COMMENTS_URL;
 
 /* initialState */
 // data, isLoading, error로 상태관리
@@ -19,9 +18,7 @@ export const __getComments = createAsyncThunk(
   "GET_COMMENTS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:3001/comments?todoId=${payload}`
-      );
+      const { data } = await axios.get(API_COMMENT_URL + `?todoId=${payload}`);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -34,7 +31,7 @@ export const __addComments = createAsyncThunk(
   "ADD_COMMENTS",
   async (newComments, thunkAPI) => {
     try {
-      const { data } = await axios.post(API_URL, newComments);
+      const { data } = await axios.post(API_COMMENT_URL, newComments);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -46,7 +43,7 @@ export const __deleteComments = createAsyncThunk(
   "DELETE_COMMENTS",
   async (id, thunkAPI) => {
     try {
-      await axios.delete(API_URL + `/` + id);
+      await axios.delete(API_COMMENT_URL + `/` + id);
       return thunkAPI.fulfillWithValue(id);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -59,7 +56,10 @@ export const __updateComments = createAsyncThunk(
   async (getEditData, thunkAPI) => {
     const { id, updateComment } = getEditData;
     try {
-      const { data } = await axios.put(API_URL + `/` + id, updateComment);
+      const { data } = await axios.put(
+        API_COMMENT_URL + `/` + id,
+        updateComment
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

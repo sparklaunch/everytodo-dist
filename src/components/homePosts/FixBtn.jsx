@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { __getAllTodos } from "../../redux/modules/todos";
 import axios from "axios";
 
-const get_url = `http://localhost:3001/todos/`;
+const REACT_APP_API_TODOS_URL = process.env.REACT_APP_API_TODOS_URL;
 
 function FixButton(props) {
   const dispatch = useDispatch();
@@ -15,7 +15,9 @@ function FixButton(props) {
 
   const deleteCheck = () => {
     if (window.confirm("삭제할래요?")) {
-      axios.delete(get_url + props.id).then(() => dispatch(__getAllTodos()));
+      axios
+        .delete(REACT_APP_API_TODOS_URL + `/` + props.id)
+        .then(() => dispatch(__getAllTodos()));
       alert("삭제완료!");
     } else {
       alert("휴");

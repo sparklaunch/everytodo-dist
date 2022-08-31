@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const get_url = `http://localhost:3001/todos/`;
+/* URL */
+const REACT_APP_API_TODOS_URL = process.env.REACT_APP_API_TODOS_URL;
 
 /* InitialState */
 // data, isLoading, error로 상태관리
@@ -17,7 +18,7 @@ export const __getAllTodos = createAsyncThunk(
   "GET_ALL_TODOS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(get_url);
+      const { data } = await axios.get(REACT_APP_API_TODOS_URL);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -29,10 +30,7 @@ export const __getTodos = createAsyncThunk(
   "GET_TODOS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(
-        get_url + payload
-        // `http://localhost:5001/todos/${payload}`
-      );
+      const { data } = await axios.get(REACT_APP_API_TODOS_URL + `/` + payload);
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -45,7 +43,7 @@ export const __deleteTodo = createAsyncThunk(
   "DELETE_TODOS",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(get_url + payload);
+      await axios.delete(REACT_APP_API_TODOS_URL + `/` + payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -58,8 +56,10 @@ export const __updateTodo = createAsyncThunk(
   "UPDATAE_TODOS",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.put(get_url + payload.id, payload);
-      console.log("response", response);
+      const response = await axios.put(
+        REACT_APP_API_TODOS_URL + `/` + payload.id,
+        payload
+      );
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -88,12 +88,10 @@ export const todosSlice = createSlice({
     [__getAllTodos.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.todos = action.payload;
-      console.log("[todos 전체 데이터 조회]", state.todos);
     },
     [__getTodos.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.todos = [action.payload];
-      console.log("[todos모듈]__getTodos", state.todos);
     },
     [__deleteTodo.fulfilled]: (state, action) => {
       state.isLoading = false;
