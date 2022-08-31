@@ -37,7 +37,7 @@ export const loginUserThunk = createAsyncThunk(
     async (userInfo: UserInfo, thunk) => {
         try {
             const { data } = await axios.get(
-                `http://localhost:3001/users?email=${userInfo.email}`
+                `https://everytodo.herokuapp.com/users?email=${userInfo.email}`
             );
             const user = data[0];
             if (user) {
@@ -61,7 +61,7 @@ export const createUserThunk = createAsyncThunk(
     "users/createUser",
     async (newUser: User, thunk) => {
         try {
-            await axios.post("http://localhost:3001/users", newUser);
+            await axios.post("https://everytodo.herokuapp.com/users", newUser);
             const token = generateJWTToken(newUser.email);
             setCookie("access_token", token);
             return thunk.fulfillWithValue("Signup succeeded.");
@@ -75,7 +75,7 @@ export const getUsersThunk = createAsyncThunk(
     "users/getUsers",
     async (_, thunk) => {
         try {
-            const { data } = await axios.get("http://localhost:3001/users");
+            const { data } = await axios.get("https://everytodo.herokuapp.com/users");
             if (data) {
                 return thunk.fulfillWithValue(data);
             } else {
