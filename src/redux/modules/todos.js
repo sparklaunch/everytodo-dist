@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 /* URL */
-const REACT_APP_API_TODOS_URL = "https://everytodo.herokuapp.com/todos";
+const API_TODOS_URL = "https://everytodo.herokuapp.com/todos";
 
 /* InitialState */
 // data, isLoading, error로 상태관리
@@ -18,7 +18,7 @@ export const __getAllTodos = createAsyncThunk(
   "GET_ALL_TODOS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(REACT_APP_API_TODOS_URL);
+      const { data } = await axios.get(API_TODOS_URL);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -30,7 +30,7 @@ export const __getTodos = createAsyncThunk(
   "GET_TODOS",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(REACT_APP_API_TODOS_URL + `/` + payload);
+      const { data } = await axios.get(API_TODOS_URL + `/` + payload);
       console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
@@ -43,7 +43,7 @@ export const __deleteTodo = createAsyncThunk(
   "DELETE_TODOS",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(REACT_APP_API_TODOS_URL + `/` + payload);
+      await axios.delete(API_TODOS_URL + `/` + payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -57,7 +57,7 @@ export const __updateTodo = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await axios.patch(
-        REACT_APP_API_TODOS_URL + `/` + payload.id,
+        API_TODOS_URL + `/` + payload.id,
         payload
       );
       return thunkAPI.fulfillWithValue(response.data);
