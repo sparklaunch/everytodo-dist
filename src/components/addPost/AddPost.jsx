@@ -12,7 +12,7 @@ import axios from "axios";
 import useToken from "../../hooks/useToken";
 
 function AddPost() {
-  const get_url = `http://localhost:3001/todos`;
+  const REACT_APP_API_TODOS_URL = process.env.REACT_APP_API_TODOS_URL;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ function AddPost() {
   const AddPostBtn = (e) => {
     e.preventDefault();
     console.log("포스트 추가");
-    axios.post(get_url, data).then((response) => {
+    axios.post(REACT_APP_API_TODOS_URL, data).then((response) => {
       dispatch(__getAllTodos());
     });
     navigate(-1);
