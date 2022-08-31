@@ -24,8 +24,3 @@ yarn-error.log*
 
 # db
 /db.json
-
-# env
-.env
-.env.development
-.env.production
