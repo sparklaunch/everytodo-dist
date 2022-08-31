@@ -56,7 +56,7 @@ export const __updateTodo = createAsyncThunk(
   "UPDATAE_TODOS",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.put(
+      const response = await axios.patch(
         REACT_APP_API_TODOS_URL + `/` + payload.id,
         payload
       );
