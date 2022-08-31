@@ -4,6 +4,8 @@ import axios from "axios";
 import {removeCookie, setCookie} from "../../shared/Cookie";
 import { generateJWTToken } from "../../utils/JWT";
 
+const API_USERS_URL = process.env.REACT_APP_API_USERS_URL;
+
 type User = {
     userID: string,
     email: string,
@@ -37,7 +39,7 @@ export const loginUserThunk = createAsyncThunk(
     async (userInfo: UserInfo, thunk) => {
         try {
             const { data } = await axios.get(
-                `https://everytodo.herokuapp.com/users?email=${userInfo.email}`
+                `${API_USERS_URL}?email=${userInfo.email}`
             );
             const user = data[0];
             if (user) {
@@ -61,7 +63,7 @@ export const createUserThunk = createAsyncThunk(
     "users/createUser",
     async (newUser: User, thunk) => {
         try {
-            await axios.post("https://everytodo.herokuapp.com/users", newUser);
+            await axios.post(API_USERS_URL, newUser);
             const token = generateJWTToken(newUser.email);
             setCookie("access_token", token);
             return thunk.fulfillWithValue("Signup succeeded.");
@@ -75,7 +77,7 @@ export const getUsersThunk = createAsyncThunk(
     "users/getUsers",
     async (_, thunk) => {
         try {
-            const { data } = await axios.get("https://everytodo.herokuapp.com/users");
+            const { data } = await axios.get(API_USERS_URL);
             if (data) {
                 return thunk.fulfillWithValue(data);
             } else {
