@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./EditStyle";
-import { useHistory, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Header from "../header/Header";
-import { Button, TextField } from "@mui/material";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { __getTodos, __updateTodo } from "../../redux/modules/todos";
 import {
@@ -11,7 +8,6 @@ import {
   EditPostForm,
   EditInputBoxes,
   EditInputs,
-  EditPostFormButton,
   NavigationButton,
 } from "./EditStyle";
 import useToken from "../../hooks/useToken";
@@ -20,7 +16,7 @@ function EditPost() {
   // navigate
   const navigate = useNavigate();
 
-  // todoId useParmams 이용해서 가져오기
+  // todoId
   const param = useParams();
   const todo_id = Number(param.id);
 
@@ -40,7 +36,6 @@ function EditPost() {
 
   // useSelect
   const { todos } = useSelector((state) => state.todos);
-  console.log("data확인", todos);
 
   // dispatch
   const dispatch = useDispatch();
@@ -73,7 +68,7 @@ function EditPost() {
 
   // useEffect
   useEffect(() => {
-    dispatch(__getTodos(todo_id)); //todoId 넣어주기
+    dispatch(__getTodos(todo_id));
   }, [dispatch]);
 
   return (
@@ -84,11 +79,6 @@ function EditPost() {
           <div>
             <EditInputBoxes>
               <label>제목</label>
-              {/* <TextField
-                fullWidth
-                label="5자 이상 작성해주세요!"
-                id="edit-title"
-              /> */}
               <EditInputs
                 placeholder="5자 이상 작성해주세요"
                 name="title"
@@ -98,11 +88,6 @@ function EditPost() {
             </EditInputBoxes>
             <EditInputBoxes>
               <label>내용</label>
-              {/* <TextField
-                fullWidth
-                label="오늘은 뭘 해볼까요?"
-                id="edit-comment"
-              /> */}
               <EditInputs
                 placeholder="오늘은 뭘 해볼까요?"
                 name="content"
@@ -118,10 +103,6 @@ function EditPost() {
             <NavigationButton onClick={() => onUpdatePost(inputs)}>
               수정하기
             </NavigationButton>
-            {/* <Button variant="contained">이전으로</Button>
-            <Button variant="contained" onClick={() => onUpdatePost(inputs)}>
-              수정하기
-            </Button> */}
           </div>
         </EditPostForm>
       </EditPostBox>
