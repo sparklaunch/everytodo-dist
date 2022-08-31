@@ -15,13 +15,12 @@ import Cookies from 'universal-cookie';
 function Header() {
   const token = useToken();
   const cookies = new Cookies();
-
   const navigate = useNavigate();
 
   const logInOut = () =>{
     if(token() !== null){
       cookies.remove('access_token');
-      window.location.reload("/");
+      navigate("/");
     } else {
       navigate("/login");
     }
