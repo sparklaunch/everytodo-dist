@@ -140,7 +140,7 @@ const Login = () => {
             >
                 로그인
             </Button>
-            <Button variant="contained" size="large" sx={{width: 300}} onClick={signupClickHandler}>
+            <Button variant="contained" size="large" sx={{width: 300, marginBottom: "30"}} onClick={signupClickHandler}>
                 회원가입
             </Button>
             <Modal
