@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { setCookie } from "../../shared/Cookie";
+import {removeCookie, setCookie} from "../../shared/Cookie";
 import { generateJWTToken } from "../../utils/JWT";
 
 type User = {
@@ -26,6 +26,11 @@ interface UserInfo {
     email: string;
     password: string;
 }
+
+export const logoutUserThunk = createAsyncThunk("users/logoutUser", (_, thunk) => {
+    removeCookie("access_token");
+    return thunk.fulfillWithValue("Logout succeeded.");
+});
 
 export const loginUserThunk = createAsyncThunk(
     "users/findUser",
