@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 /* URL */
-const API_COMMENT_URL = process.env.API_COMMENTS_URL;
+const API_COMMENT_URL = "https://everytodo.herokuapp.com/comments";
 
 /* initialState */
 // data, isLoading, error로 상태관리

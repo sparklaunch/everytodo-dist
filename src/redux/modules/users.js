@@ -4,7 +4,7 @@ import axios from "axios";
 import {removeCookie, setCookie} from "../../shared/Cookie";
 import { generateJWTToken } from "../../utils/JWT";
 
-const API_USERS_URL = process.env.API_USERS_URL;
+const API_USERS_URL = "https://everytodo.herokuapp.com/users";
 
 type User = {
     userID: string,
