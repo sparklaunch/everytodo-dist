@@ -5,5 +5,7 @@
       "email": "redwoodnatlpark@gmail.com",
       "password": "1234"
     }
-  ]
+  ],
+  "todos": [],
+  "comments": []
 }
