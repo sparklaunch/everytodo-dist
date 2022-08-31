@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 /* URL */
-const API_COMMENT_URL = process.env.REACT_APP_API_COMMENTS_URL;
+const API_COMMENT_URL = process.env.API_COMMENTS_URL;
 
 /* initialState */
 // data, isLoading, error로 상태관리

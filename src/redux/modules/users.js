@@ -4,7 +4,7 @@ import axios from "axios";
 import {removeCookie, setCookie} from "../../shared/Cookie";
 import { generateJWTToken } from "../../utils/JWT";
 
-const API_USERS_URL = process.env.REACT_APP_API_USERS_URL;
+const API_USERS_URL = process.env.API_USERS_URL;
 
 type User = {
     userID: string,

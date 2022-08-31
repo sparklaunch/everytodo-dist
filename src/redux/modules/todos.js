@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 /* URL */
-const REACT_APP_API_TODOS_URL = process.env.REACT_APP_API_TODOS_URL;
+const REACT_APP_API_TODOS_URL = process.env.API_TODOS_URL;
 
 /* InitialState */
 // data, isLoading, error로 상태관리
