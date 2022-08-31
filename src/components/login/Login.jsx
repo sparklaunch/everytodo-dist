@@ -51,7 +51,9 @@ const Login = () => {
 
     const [email, setEmail, emailChangeHandler] = useInput("");
     const [password, setPassword, passwordChangeHandler] = useInput("");
-
+    const signupClickHandler = () => {
+        navigator("/signup");
+    }
     const loginClickHandler = async () => {
         if (email.length === 0) {
             setOpen({
@@ -89,7 +91,6 @@ const Login = () => {
                     });
                     break;
                 case "Login succeeded.":
-                    console.log("login succeeded");
                     navigator("/");
                     break;
                 default:
@@ -138,6 +139,9 @@ const Login = () => {
                 onClick={loginClickHandler}
             >
                 로그인
+            </Button>
+            <Button variant="contained" size="large" sx={{width: 300}} onClick={signupClickHandler}>
+                회원가입
             </Button>
             <Modal
                 open={open.state}
